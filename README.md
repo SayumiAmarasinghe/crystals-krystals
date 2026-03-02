@@ -1,5 +1,5 @@
 # crystals-krystals
-Repository for the SEVA project for Crystal's Krystals through GDG
+Repository for the SEVA project for Crystal's Krystals through the CPP club GDG
 
 ## How to Set Up the Repository 
     -navigate to the repository, and click on the green button called "Code" 
