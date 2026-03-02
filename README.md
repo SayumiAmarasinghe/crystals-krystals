@@ -13,4 +13,5 @@ Repository for the SEVA project for Crystal's Krystals through GDG
     -open the terminal in your preferred IDE (VS Code, Intellijay, etc)
     -run this command in the terminal: 
         gh repo clone SayumiAmarasinghe/crystals-krystals
+
     
