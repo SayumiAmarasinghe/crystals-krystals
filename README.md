@@ -1,6 +1,5 @@
 # crystals-krystals
 Repository for the SEVA project for Crystal's Krystals through GDG
-Co-Leads: Sayumi Amarasinghe and Rebeca Smith
 
 ## How to Set Up the Repository 
     -navigate to the repository, and click on the green button called "Code" 
