@@ -14,4 +14,52 @@ Repository for the SEVA project for Crystal's Krystals through the CPP club GDG
     -run this command in the terminal: 
         gh repo clone SayumiAmarasinghe/crystals-krystals
 
-    
+---  
+
+## Prerequisites
+
+- [Node.js](https://nodejs.org/) (v18+)  
+
+---  
+
+## Repo Structure
+
+```
+crystals-krystals/
+  backend/    ← Strapi CMS
+  frontend/   ← React app 
+```
+
+---  
+
+
+## Backend
+
+### First Time Setup
+```bash
+cd backend
+npm install
+cp .env.example .env
+```
+Generate a random secret for each value and replace the placeholders in `.env`:
+```bash
+node -e "console.log(require('crypto').randomBytes(32).toString('base64'))"
+```
+
+Run that multiple times, paste a different value into each field in `.env`.
+
+Then start it:
+
+```bash
+npm run develop
+```
+
+Go to `http://localhost:1337/admin` and create your admin account.
+
+### Every Time After
+
+```bash
+cd backend
+npm run develop
+```
+
