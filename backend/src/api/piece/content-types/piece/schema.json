@@ -16,12 +16,21 @@
       "required": true,
       "unique": true
     },
+    "Price": {
+      "type": "decimal",
+      "required": true
+    },
     "Description": {
+      "type": "blocks",
+      "required": true
+    },
+    "Notes": {
       "type": "blocks"
     },
     "Photo": {
       "type": "media",
       "multiple": true,
+      "required": true,
       "allowedTypes": [
         "images",
         "files",
@@ -29,9 +38,13 @@
         "audios"
       ]
     },
-    "Metal": {
+    "Material": {
       "type": "enumeration",
+      "required": true,
       "enum": [
+        "Polymer Clay",
+        "Beaded",
+        "Gold Filled",
         "Gold",
         "Silver"
       ]
