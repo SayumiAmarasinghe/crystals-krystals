@@ -1,0 +1,120 @@
+/* Navbar.css */
+
+.navbar-container {
+  width: 100%;
+  background-color: #f3d7e0; 
+  padding: 2.5rem 1rem 2rem 1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  box-sizing: border-box;
+}
+
+/* --- Logo Section --- */
+.navbar-logo {
+  margin-bottom: 2rem;
+}
+
+.navbar-logo a {
+  font-family: 'Daydream', cursive, sans-serif;
+  font-size: 3rem;
+  color: #111827;
+  text-decoration: none;
+  letter-spacing: 0.05em;
+  line-height: 1;
+}
+
+/* --- Links Section --- */
+.navbar-links {
+  display: flex;
+  gap: 4rem; 
+  justify-content: center;
+  align-items: center; /* Ensures the button aligns with links */
+  flex-wrap: wrap; 
+}
+
+.navbar-links a {
+  font-family: serif;
+  font-size: 1.1rem;
+  font-weight: bold;
+  color: #111827;
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.navbar-links a:hover {
+  color: #8b5cf6; 
+}
+
+/* --- Dropdown Section --- */
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+/* Make the button look exactly like the standard links */
+.dropdown-toggle {
+  background: none;
+  border: none;
+  font-family: serif;
+  font-size: 1.1rem;
+  font-weight: bold;
+  color: #111827;
+  cursor: pointer;
+  padding: 0;
+  transition: color 0.2s ease;
+}
+
+.dropdown-toggle:hover {
+  color: #8b5cf6;
+}
+
+.dropdown-menu {
+  position: absolute;
+  top: 100%;
+  left: 0; /* Aligns dropdown to the left of the Shop text */
+  margin-top: 0.5rem;
+  background-color: #f3d7e0; /* Matches navbar pink */
+  min-width: 130px;
+  display: flex;
+  flex-direction: column;
+  padding: 0.5rem 0;
+  border-radius: 4px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.1); /* Subtle shadow so it doesn't blend perfectly into the body if it overlaps */
+  z-index: 10;
+}
+
+.dropdown-menu a {
+  padding: 0.5rem 1rem;
+  font-family: serif;
+  font-size: 1.1rem;
+  color: #111827;
+  text-decoration: none;
+  display: block;
+  text-align: left; /* Left align like your image */
+}
+
+.dropdown-menu a:hover {
+  background-color: #e8c6d1; /* Slightly darker pink on hover */
+  color: #111827;
+}
+
+/* --- Mobile Adjustments --- */
+@media (max-width: 600px) {
+  .navbar-logo a {
+    font-size: 2rem; 
+  }
+  
+  .navbar-links {
+    gap: 1.5rem; 
+  }
+  
+  .navbar-container {
+    padding: 2rem 1rem 1.5rem 1rem;
+  }
+  
+  .dropdown-menu {
+    left: 50%;
+    transform: translateX(-50%); /* Centers dropdown on mobile */
+  }
+}
