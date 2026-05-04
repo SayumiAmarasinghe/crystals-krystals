@@ -485,7 +485,7 @@ export interface ApiCategoryCategory extends Struct.CollectionTypeSchema {
     Name: Schema.Attribute.String &
       Schema.Attribute.Required &
       Schema.Attribute.Unique;
-    pieces: Schema.Attribute.Relation<'manyToMany', 'api::piece.piece'>;
+    pieces: Schema.Attribute.Relation<'oneToMany', 'api::piece.piece'>;
     publishedAt: Schema.Attribute.DateTime;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
@@ -504,10 +504,8 @@ export interface ApiPiecePiece extends Struct.CollectionTypeSchema {
     draftAndPublish: true;
   };
   attributes: {
-    categories: Schema.Attribute.Relation<
-      'manyToMany',
-      'api::category.category'
-    >;
+    category: Schema.Attribute.Relation<'manyToOne', 'api::category.category'>;
+    Collection: Schema.Attribute.String;
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -515,20 +513,11 @@ export interface ApiPiecePiece extends Struct.CollectionTypeSchema {
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<'oneToMany', 'api::piece.piece'> &
       Schema.Attribute.Private;
-    Material: Schema.Attribute.Enumeration<
-      ['Polymer Clay', 'Beaded', 'Gold Filled', 'Gold', 'Silver']
-    > &
-      Schema.Attribute.Required;
     Name: Schema.Attribute.String &
       Schema.Attribute.Required &
       Schema.Attribute.Unique;
     Notes: Schema.Attribute.Blocks;
-    Photo: Schema.Attribute.Media<
-      'images' | 'files' | 'videos' | 'audios',
-      true
-    > &
-      Schema.Attribute.Required;
-    Price: Schema.Attribute.Decimal & Schema.Attribute.Required;
+    Photo: Schema.Attribute.Media<'images', true> & Schema.Attribute.Required;
     publishedAt: Schema.Attribute.DateTime;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
