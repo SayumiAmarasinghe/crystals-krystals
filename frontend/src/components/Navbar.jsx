@@ -3,20 +3,13 @@ import '../navbar.css';
 import { Link } from 'react-router-dom';
 
 const Navbar = () => {
-  // State to track if the Shop dropdown is open
   const [isShopOpen, setIsShopOpen] = useState(false);
-
-  // Function to toggle the dropdown when "Shop" is clicked
-  const toggleShop = (e) => {
-    e.preventDefault(); 
-    setIsShopOpen(!isShopOpen);
-  };
 
   return (
     <nav className="navbar-container">
       {/* Brand Logo */}
       <div className="navbar-logo">
-        <Link to="/">Crystal's Krystals</Link>
+        <Link to="/">Crystal&apos;s Krystals</Link>
       </div>
 
       {/* Navigation Links */}
@@ -24,17 +17,15 @@ const Navbar = () => {
         <Link to="/">Home</Link>
         
         {/* Shop Dropdown */}
-        <div className="dropdown" onMouseLeave={() => setIsShopOpen(false)}>
-          <button 
-            className="dropdown-toggle" 
-            onClick={toggleShop}
-            aria-haspopup="true"
-            aria-expanded={isShopOpen}
-          >
+        <div
+          className="dropdown"
+          onMouseEnter={() => setIsShopOpen(true)}
+          onMouseLeave={() => setIsShopOpen(false)}
+        >
+          <Link to="/shop" className="dropdown-toggle">
             Shop
-          </button>
+          </Link>
           
-          {/* The Dropdown Menu */}
           {isShopOpen && (
             <div className="dropdown-menu">
               <Link to="/shop/earrings">Earrings</Link>
