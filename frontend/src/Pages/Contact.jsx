@@ -1,6 +1,13 @@
 import React from 'react';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
+<<<<<<< HEAD
+//import './About.css';
+const Contact = () => {
+  return (
+    <div className="contact-page">
+        
+=======
 import './Contact.css';
 import logo from '../assets/fonts/About Photos/crystal-transparent-logo.png';
 
@@ -38,6 +45,7 @@ const Contact = () => {
           <p>Instagram @crystals.krystals</p>
           <p>https://www.instagram.com/crystals.krystals/</p>
         </div>
+>>>>>>> origin/main
     </div>
   );
 };
