@@ -1,0 +1,218 @@
+@import url('https://fonts.googleapis.com/css2?family=Podkova:wght@400;500;600;700;800;900&display=swap');
+
+.about-page {
+  background-color: #ffffff;
+  color: #000000;
+  padding: 35px 85px 70px;
+  font-family: 'Podkova', serif;
+}
+
+/* Top About Section */
+
+.about-top {
+  display: grid;
+  grid-template-columns: 1.2fr 1fr;
+  align-items: center;
+  gap: 70px;
+  margin-bottom: 25px;
+}
+
+.about-copy h1 {
+  font-family: 'Podkova', serif;
+  font-size: 46px;
+  font-weight: 900;
+  margin-bottom: 32px;
+}
+
+.about-copy p {
+  font-family: 'Podkova', serif;
+  font-size: 18px;
+  font-weight: 500;
+  line-height: 2.2;
+  max-width: 650px;
+  margin-bottom: 22px;
+}
+
+.about-logo-area {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.about-logo {
+  width: 330px;
+  height: auto;
+  object-fit: contain;
+}
+
+/* Mission Section */
+
+.mission {
+  margin-top: 10px;
+  margin-bottom: 25px;
+}
+
+.mission h2 {
+  font-family: 'Podkova', serif;
+  font-size: 26px;
+  font-weight: 900;
+  margin-bottom: 30px;
+}
+
+.mission p {
+  font-family: 'Podkova', serif;
+  font-size: 18px;
+  font-weight: 500;
+  line-height: 2.2;
+  margin-bottom: 20px;
+  max-width: 1100px;
+}
+
+/* Middle Photos */
+
+.about-photos {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 12px;
+  margin: 10px 0 45px;
+}
+
+.about-photo {
+  width: 310px;
+  height: 340px;
+  object-fit: cover;
+  object-position: center;
+  background-color: #ffffff;
+}
+
+.about-photo-placeholder {
+  width: 310px;
+  height: 340px;
+  background-color: #f1d5db;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #ae4667;
+  font-weight: 800;
+}
+
+/* Team Section */
+/* Team Section */
+
+.team {
+  text-align: center;
+}
+
+.team h2 {
+  font-family: 'Podkova', serif;
+  font-size: 22px;
+  font-weight: 900;
+  margin-bottom: 35px;
+  text-align: center;
+}
+
+.team-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  column-gap: 90px;
+  row-gap: 65px;
+  justify-items: center;
+}
+
+.team-card {
+  width: 260px;
+  text-align: center;
+}
+
+.team-circle {
+  width: 190px;
+  height: 190px;
+  border-radius: 50%;
+  margin: 0 auto 18px;
+}
+
+.team-circle.dark {
+  background-color: #ae4667;
+}
+
+.team-circle.cream {
+  background-color: #f6e9e2;
+}
+
+.team-circle.pink {
+  background-color: #ffbcd1;
+}
+
+.team-card h3 {
+  font-family: 'Podkova', serif;
+  font-size: 12px;
+  font-weight: 700;
+  margin-bottom: 18px;
+  text-align: center;
+}
+
+.team-card p {
+  font-family: 'Podkova', serif;
+  font-size: 11px;
+  font-weight: 500;
+  line-height: 2.2;
+  text-align: center;
+}
+
+/* Mobile */
+
+@media (max-width: 850px) {
+  .about-page {
+    padding: 25px 25px 60px;
+  }
+
+  .about-top {
+    grid-template-columns: 1fr;
+    gap: 30px;
+  }
+
+  .about-logo-area {
+    justify-content: center;
+  }
+
+  .about-logo {
+    width: 260px;
+  }
+
+  .about-copy h1 {
+    font-size: 38px;
+  }
+
+  .mission h2 {
+    font-size: 24px;
+  }
+
+  .team h2 {
+    font-size: 22px;
+  }
+
+  .about-copy p,
+  .mission p {
+    font-size: 16px;
+  }
+
+  .about-photos {
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .about-photo {
+    width: 280px;
+    height: 300px;
+  }
+
+  .team-grid {
+    grid-template-columns: 1fr;
+    gap: 45px;
+  }
+
+  .team-card {
+    width: 100%;
+  }
+}
