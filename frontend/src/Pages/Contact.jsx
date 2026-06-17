@@ -2,6 +2,8 @@ import React from 'react';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import './Contact.css';
+import logo from '../assets/fonts/About Photos/crystal-transparent-logo.png';
+
 const Contact = () => {
   return (
     <div className="contact-page">
@@ -31,6 +33,7 @@ const Contact = () => {
 
         {/*Contact Us*/}
         <div>
+          <img src={logo} alt="Crystal's Krystals logo" className="logo"/>
           <h2>Contact Us</h2>
           <p>Instagram @crystals.krystals</p>
           <p>https://www.instagram.com/crystals.krystals/</p>

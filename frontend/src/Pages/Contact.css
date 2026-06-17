@@ -1,12 +1,16 @@
+@import url('https://fonts.googleapis.com/css2?family=Podkova:wght@400;500;600;700;800;900&display=swap');
+
 .contact-page{
     background-color: #FFBCD1;
     padding: 40px;
-    border-radius: 12px;
     color: #000000; 
 
 }
 
 h1 {
+    font-family: 'Podkova', serif;
+    font-size: 40px;
+    font-weight: 700;
     text-align: center;
     margin-bottom: 30px;
     padding-bottom: 15px;
@@ -15,16 +19,33 @@ h1 {
 }
 
 h2 {
-    text-align: left;
+    font-family: 'Podkova', serif;
+    font-size: 32px;
+    font-weight: 600;
+    text-align: center;
+    text-align: center;
     margin-top: 40px;
     font-size: 1.8em;
     color: #000000; 
 }
 
+p {
+    font-family: 'Podkova', serif;
+    font-size: 18px;
+    font-weight: 400;
+}
+
+.logo {
+    width: 250px;
+    height: auto;
+}
+
 .form {
+    font-family: 'Podkova', serif;
     text-align: left;
     margin-top: 40px;
     font-size: 1.25em;
+    padding-bottom: 40px;
     label {
         display: block; 
         font-weight: 600; 
@@ -35,15 +56,18 @@ h2 {
     textarea {
         width: 100%;
         padding: 12px;
-        border-radius: 6px;
+        border-radius: 16px;
+        color: #000000;
         font-size: 1em;
-        box-sizing: border-box; 
-        transition: border-color 0.3s ease;
+        box-sizing: border-box;
+        background-color: #FFBCD1;
+        border: 2px solid #000000;
         margin-bottom: 24px;
 
     }
 
     .submit-button {
+    font-family: 'Podkova', serif;
     padding: 15px;
     padding-left: 60px;
     padding-right: 60px;
@@ -52,7 +76,7 @@ h2 {
     border: none;
     border-radius: 48px;
     font-size: 1.1em;
-    font-weight: bold;
+    font-weight: 400;
     cursor: pointer;
 }
 }
