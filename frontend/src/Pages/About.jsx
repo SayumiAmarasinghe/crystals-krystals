@@ -22,11 +22,7 @@ const About = () => {
     <main className="about-page">
       <section className="about-top">
         <div className="about-copy">
-<<<<<<< HEAD
           <h1>About</h1>
-=======
-          <h1>About Crystal's Krystals</h1>
->>>>>>> origin/main
 
           <p>
             Crystal&apos;s Krystals – Jewelry is a small, locally owned
