@@ -16,10 +16,13 @@
       "required": true,
       "unique": true
     },
+<<<<<<< HEAD
     "Price": {
       "type": "decimal",
       "required": true
     },
+=======
+>>>>>>> origin/main
     "Description": {
       "type": "blocks",
       "required": true
@@ -27,11 +30,18 @@
     "Notes": {
       "type": "blocks"
     },
+<<<<<<< HEAD
+=======
+    "Collection": {
+      "type": "string"
+    },
+>>>>>>> origin/main
     "Photo": {
       "type": "media",
       "multiple": true,
       "required": true,
       "allowedTypes": [
+<<<<<<< HEAD
         "images",
         "files",
         "videos",
@@ -57,3 +67,16 @@
     }
   }
 }
+=======
+        "images"
+      ]
+    },
+    "category": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::category.category",
+      "inversedBy": "pieces"
+    }
+  }
+}
+>>>>>>> origin/main
