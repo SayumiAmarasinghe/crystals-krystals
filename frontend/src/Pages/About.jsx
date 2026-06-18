@@ -5,16 +5,73 @@ import logo from '../assets/fonts/About Photos/crystal-transparent-logo.png';
 import crystalEarrings from '../assets/fonts/About Photos/crystal-earrings.jpg';
 import crystalBooth from '../assets/fonts/About Photos/Crystal in front of booth.webp';
 
+// Team photos
+import crystalPhoto from '../assets/team/Crystal  Duran .png';
+import sayumiPhoto from '../assets/team/Sayumi Amarasinghe.jpg';
+import rebeccaPhoto from '../assets/team/Rebecca L. Smith.jpg';
+import erinPhoto from '../assets/team/Erin Lee.jpg';
+import elenaPhoto from '../assets/team/Elena Sorn.jpeg';
+import janicePhoto from '../assets/team/Janice Lachan.jpeg';
+import lindsayPhoto from '../assets/team/Lindsay Kislingbury.jpg';
+import emilyPhoto from '../assets/team/Emily Quon.jpg';
+
 const teamMembers = [
-  { id: 1, color: 'dark' },
-  { id: 2, color: 'cream' },
-  { id: 3, color: 'pink' },
-  { id: 4, color: 'cream' },
-  { id: 5, color: 'pink' },
-  { id: 6, color: 'dark' },
-  { id: 7, color: 'pink' },
-  { id: 8, color: 'dark' },
-  { id: 9, color: 'cream' },
+  {
+    id: 1,
+    name: "Crystal Duran",
+    role: "Owner",
+    image: crystalPhoto,
+    description: "Owner."
+  },
+  {
+    id: 2,
+    name: "Sayumi Amarasinghe",
+    role: "Senior Contributor",
+    image: sayumiPhoto,
+    description: "Senior with a love of web development and fantasy books."
+  },
+  {
+    id: 3,
+    name: "Rebecca L. Smith",
+    role: "Aspiring Software Developer",
+    image: rebeccaPhoto,
+    description: "Aspiring Software Developer who also enjoys flowering and painting on the side."
+  },
+  {
+    id: 4,
+    name: "Erin Lee",
+    role: "UX Designer",
+    image: erinPhoto,
+    description: "UX designer with a love of art and music."
+  },
+  {
+    id: 5,
+    name: "Elena Sorn",
+    role: "Front-End Contributor",
+    image: elenaPhoto,
+    description: "Front-End Contributor, Senior, CIS, IR."
+  },
+  {
+  id: 6,
+  name: "Emily Quon",
+  role: "Frontend Contributor",
+  image: emilyPhoto,
+  description: "Upcoming sophomore with an interest in cybersecurity who enjoys playing badminton, reading romance novels, and watching K-dramas."
+},
+{
+  id: 7,
+  name: "Lindsay Kislingbury",
+  role: "Software Engineer",
+  image: lindsayPhoto,
+  description: "Software engineer, and pulp sci-fi enthusiast."
+},
+{
+  id: 8,
+  name: "Janice Lachan",
+  role: "Aspiring Software Engineer",
+  image: janicePhoto,
+  description: "A rising senior aspiring to become a software engineer with interests in web development and robotics."
+},
 ];
 
 const About = () => {
@@ -82,14 +139,15 @@ const About = () => {
         <div className="team-grid">
           {teamMembers.map((member) => (
             <article className="team-card" key={member.id}>
-              <div className={`team-circle ${member.color}`}></div>
+              <img
+                src={member.image}
+                alt={member.name}
+                className="team-photo"
+              />
 
-              <h3>Name</h3>
+              <h3>{member.name}</h3>
 
-              <p>
-                &quot;Lorem ipsum dolor sit amet, consectetur adipiscing elit,
-                sed do eiusmod tempor incididunt
-              </p>
+              <p>{member.description}</p>
             </article>
           ))}
         </div>
