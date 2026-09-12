@@ -16,13 +16,6 @@
       "required": true,
       "unique": true
     },
-<<<<<<< HEAD
-    "Price": {
-      "type": "decimal",
-      "required": true
-    },
-=======
->>>>>>> origin/main
     "Description": {
       "type": "blocks",
       "required": true
@@ -30,46 +23,14 @@
     "Notes": {
       "type": "blocks"
     },
-<<<<<<< HEAD
-=======
     "Collection": {
       "type": "string"
     },
->>>>>>> origin/main
     "Photo": {
       "type": "media",
       "multiple": true,
       "required": true,
-      "allowedTypes": [
-<<<<<<< HEAD
-        "images",
-        "files",
-        "videos",
-        "audios"
-      ]
-    },
-    "Material": {
-      "type": "enumeration",
-      "required": true,
-      "enum": [
-        "Polymer Clay",
-        "Beaded",
-        "Gold Filled",
-        "Gold",
-        "Silver"
-      ]
-    },
-    "categories": {
-      "type": "relation",
-      "relation": "manyToMany",
-      "target": "api::category.category",
-      "mappedBy": "pieces"
-    }
-  }
-}
-=======
-        "images"
-      ]
+      "allowedTypes": ["images"]
     },
     "category": {
       "type": "relation",
@@ -79,4 +40,3 @@
     }
   }
 }
->>>>>>> origin/main
