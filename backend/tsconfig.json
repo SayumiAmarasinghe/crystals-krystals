@@ -13,7 +13,8 @@
     "noEmitOnError": true,
     "noImplicitThis": true,
     "outDir": "dist",
-    "rootDir": "."
+    "rootDir": ".",
+    "ignoreDeprecations": "5.0"
   },
   "include": [
     // Include root files

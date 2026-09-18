@@ -1,18 +1,19 @@
-import React from 'react';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import Navbar from './components/Navbar';
-import Footer from './components/Footer';
+import React from "react";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import Navbar from "./components/Navbar";
+import Footer from "./components/Footer";
 
 // Import your pages
-import Home from './Pages/Home';
-import Shop from './Pages/Shop';
-import About from './Pages/About';
-import Contact from './Pages/Contact';
-import CustomOrder from './Pages/CustomOrder';
-import Earrings from './Pages/Earrings';
-import Necklace from './Pages/Necklace';
-import Rings from './Pages/Rings';
-import Miscellaneous from './Pages/Miscellaneous';
+import Home from "./Pages/Home";
+import Shop from "./Pages/Shop";
+import About from "./Pages/About";
+import Contact from "./Pages/Contact";
+import CustomOrder from "./Pages/CustomOrder";
+import Earrings from "./Pages/Earrings";
+import Necklace from "./Pages/Necklace";
+import Rings from "./Pages/Rings";
+import Miscellaneous from "./Pages/Miscellaneous";
+import Test from "./Pages/Test";
 
 function App() {
   return (
@@ -32,14 +33,21 @@ function App() {
           <Route path="/shop/necklaces" element={<Necklace />} />
           <Route path="/shop/rings" element={<Rings />} />
           <Route path="shop/miscellaneous" element={<Miscellaneous />} />
+          <Route path="/test" element={<Test />} />
           {/* Optional: A catch-all route for 404 Not Found */}
-          <Route path="*" element={<div style={{textAlign: 'center', padding: '4rem'}}>Page not found!</div>} />
+          <Route
+            path="*"
+            element={
+              <div style={{ textAlign: "center", padding: "4rem" }}>
+                Page not found!
+              </div>
+            }
+          />
         </Routes>
       </main>
 
       {/* The Footer stays at the bottom of every page */}
       <Footer />
-    
     </BrowserRouter>
   );
 }
