@@ -1,0 +1,30 @@
+/* ShopPages.css */
+
+/* Applies the light pink background only to the shop pages */
+.shop-container {
+   background-color: #ffffff;; 
+  min-height: 100vh;
+  padding: 40px;
+}
+
+/* The 4-column grid setup */
+.shop-container .jewelry-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 24px;
+}
+
+/* Uniform square images */
+.shop-container .jewelry-card img {
+  width: 100%;
+  aspect-ratio: 1 / 1; 
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+/* Styling for the text under the images */
+.shop-container .product-name {
+  font-weight: bold;
+  margin-top: 8px;
+  color: #000;
+}

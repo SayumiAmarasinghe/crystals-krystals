@@ -4,7 +4,7 @@ import Footer from '../components/Footer';
 //import './About.css';
 const Miscellaneous = () => {
   return (
-    <div className="miscellaneous-page">
+    <div className="miscellaneous-page shop-container">
         
     </div>
   );
