@@ -6,10 +6,12 @@ import ItemGrid from '../components/ItemGrid';
 import './ShopPages.css';
 
 export default function Earrings() {
-  <div className="shop-container"></div>
+  
   return (
-    <main className="page-container">
-      <ItemGrid categoryTitle="Earrings" />
-    </main>
+    <div className="shop-container">
+      <main className="page-container">
+        <ItemGrid categoryTitle="Earrings" />
+      </main>
+    </div>
   );
 }
