@@ -11,10 +11,14 @@
  *    STRAPI_URL, 
  *    fetchPiecesByCategory, 
  *    fetchCategories, 
+ *    fetchPieceById,
+ *    fetchCategoryById,
+ *    fetchAboutPage,
  *    getPieceName,
  *    getPieceDescription, 
  *    getPieceCollection, 
  *    getPiecePhotoUrl, 
+ *    getPieceDocumentId,
  *    getPlainText 
  * } from '../utils.js';
  * 
@@ -24,7 +28,7 @@
 
 // Base URL of the Strapi backend. Falls back to localhost for local dev.
 // Set VITE_STRAPI_URL in your .env file for staging/production.
-export const STRAPI_URL = "http://localhost:1337";
+export const STRAPI_URL = import.meta.env.VITE_STRAPI_URL || "http://localhost:1337";
 
 
 
@@ -77,6 +81,80 @@ export async function fetchCategories() {
 
 
 /**
+ * fetchPieceById(documentId)
+ * ---------------------------------------------------------------------------
+ * Fetches a single piece by its Strapi v5 documentId (not the numeric id).
+ * documentId is the stable identifier Strapi v5 recommends for API calls —
+ * it stays the same across draft/published versions of a piece, whereas
+ * the numeric id can differ between them. Use this for a product detail
+ * page (e.g. when a user clicks a card in the grid/slider).
+ *
+ * @param {string} documentId - the piece's documentId (piece.documentId), not id
+ * @returns {Promise<Object|null>} the piece object, or null if not found
+ * @throws {Error} if the request fails
+ *
+ * Example: const piece = await fetchPieceById(piece.documentId);
+ */
+export async function fetchPieceById(documentId) {
+  const res = await fetch(`${STRAPI_URL}/api/pieces/${documentId}?populate=*`);
+  if (!res.ok) throw new Error('Failed to load item');
+  const data = await res.json();
+  return data.data || null;
+}
+
+
+
+/**
+ * fetchCategoryById(documentId)
+ * ---------------------------------------------------------------------------
+ * Fetches a single category by its Strapi v5 documentId (not numeric id),
+ * including its own Description and (when populated) its pieces. For the
+ * common case of "show me pieces in category X", use
+ * fetchPiecesByCategory() instead.
+ *
+ * @param {string} documentId - the category's documentId, not id
+ * @returns {Promise<Object|null>} the category object, or null if not found
+ * @throws {Error} if the request fails
+ *
+ * Example: const category = await fetchCategoryById(category.documentId);
+ */
+export async function fetchCategoryById(documentId) {
+  const res = await fetch(`${STRAPI_URL}/api/categories/${documentId}?populate=*`);
+  if (!res.ok) throw new Error('Failed to load category');
+  const data = await res.json();
+  return data.data || null;
+}
+
+
+
+/**
+ * fetchAboutPage()
+ * ---------------------------------------------------------------------------
+ * Fetches the About page content.
+ *
+ * IMPORTANT: unlike every other endpoint in this file, About is a Strapi
+ * "single type" (there's only ever one About page, not a list). That means
+ * the response shape is different: `data` comes back as a plain OBJECT,
+ * not an array. Do NOT reuse the `data.data || []` pattern from the other
+ * fetch* functions here — there's no array to map over.
+ *
+ * @returns {Promise<Object|null>} the About page object, or null if not found
+ * @throws {Error} if the request fails
+ *
+ * Example:
+ *   const about = await fetchAboutPage();
+ *   <p>{getPlainText(about?.Description)}</p>
+ */
+export async function fetchAboutPage() {
+  const res = await fetch(`${STRAPI_URL}/api/about?populate=*`);
+  if (!res.ok) throw new Error('Failed to load about page');
+  const data = await res.json();
+  return data.data || null; // note: object, not array — see comment above
+}
+
+
+
+/**
  * getPlainText(blocks)
  * ---------------------------------------------------------------------------
  * Converts Strapi's rich-text "blocks" format into a single plain-text string.
@@ -106,8 +184,12 @@ export const getPlainText = (blocks) => {
 /**
  * getPieceName(piece)
  * ---------------------------------------------------------------------------
- * Reads the display name off a single "piece" item, no matter which
- * Strapi response shape it came in (flat or nested under `attributes`).
+ * Reads the display name off a single "piece" item.
+ *
+ * Note: this project's Strapi backend (v5) returns flat fields
+ * (piece.Name), not the nested `attributes.Name` shape from older
+ * Strapi v4. The `piece.attributes?.Name` fallback below is defensive
+ * in case that ever changes — you shouldn't normally hit it here.
  *
  * @param {Object} piece - a single item from the /api/pieces response
  * @returns {string|undefined}
@@ -160,7 +242,8 @@ export function getPieceCollection(piece) {
  * ---------------------------------------------------------------------------
  * Returns a ready-to-use, full image URL (STRAPI_URL + path) for a piece's
  * first photo, preferring the "medium" format, then "thumbnail", then the
- * original. Handles both flat and nested Strapi shapes.
+ * original. Photo is always an array in Strapi (even for a single image),
+ * so this always reads the first entry.
  *
  * @param {Object} piece
  * @returns {string|null} full image URL, or null if there's no photo
@@ -176,4 +259,22 @@ export function getPiecePhotoUrl(piece) {
     firstPhoto?.url ||
     firstPhoto?.attributes?.url;
   return path ? `${STRAPI_URL}${path}` : null;
+}
+
+
+
+/**
+ * getPieceDocumentId(piece)
+ * ---------------------------------------------------------------------------
+ * Reads the piece's documentId — the stable identifier to use when building
+ * links or calling fetchPieceById(), rather than piece.id (the numeric id
+ * can change between draft/published versions in Strapi v5).
+ *
+ * @param {Object} piece
+ * @returns {string|undefined}
+ *
+ * Example: <Link to={`/pieces/${getPieceDocumentId(piece)}`}>
+ */
+export function getPieceDocumentId(piece) {
+  return piece.documentId;
 }
