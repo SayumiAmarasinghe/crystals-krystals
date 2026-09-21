@@ -28,7 +28,7 @@ const teamMembers = [
     name: "Sayumi Amarasinghe",
     role: "Senior Contributor",
     image: sayumiPhoto,
-    description: "Senior with a love of web development and fantasy books."
+    description: "Aspiring Web Developer with a love of fantasy books."
   },
   {
     id: 3,

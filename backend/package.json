@@ -1,4 +1,4 @@
-{
+﻿{
   "name": "backend",
   "version": "0.1.0",
   "private": true,
@@ -16,10 +16,11 @@
   },
   "dependencies": {
     "@opentelemetry/api": "^1.9.1",
-    "@strapi/plugin-cloud": "5.38.0",
-    "@strapi/plugin-users-permissions": "5.38.0",
-    "@strapi/strapi": "5.38.0",
+    "@strapi/plugin-cloud": "^5.53.0",
+    "@strapi/plugin-users-permissions": "^5.53.0",
+    "@strapi/strapi": "^5.53.0",
     "better-sqlite3": "12.4.1",
+    "pg": "^8.20.0",
     "react": "^18.0.0",
     "react-dom": "^18.0.0",
     "react-router-dom": "^6.0.0",
@@ -33,7 +34,7 @@
     "typescript": "^5"
   },
   "overrides": {
-    "@strapi/admin": "5.38.0"
+    "@strapi/admin": "5.53.0"
   },
   "engines": {
     "node": ">=20.0.0 <=24.x.x",
