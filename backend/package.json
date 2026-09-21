@@ -15,6 +15,7 @@
     "upgrade:dry": "npx @strapi/upgrade latest --dry"
   },
   "dependencies": {
+    "@opentelemetry/api": "^1.9.1",
     "@strapi/plugin-cloud": "5.38.0",
     "@strapi/plugin-users-permissions": "5.38.0",
     "@strapi/strapi": "5.38.0",
@@ -22,6 +23,7 @@
     "react": "^18.0.0",
     "react-dom": "^18.0.0",
     "react-router-dom": "^6.0.0",
+    "sharp": "^0.35.4",
     "styled-components": "^6.0.0"
   },
   "devDependencies": {
@@ -29,6 +31,9 @@
     "@types/react": "^18",
     "@types/react-dom": "^18",
     "typescript": "^5"
+  },
+  "overrides": {
+    "@strapi/admin": "5.38.0"
   },
   "engines": {
     "node": ">=20.0.0 <=24.x.x",
