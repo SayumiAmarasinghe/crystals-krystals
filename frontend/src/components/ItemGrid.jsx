@@ -9,21 +9,23 @@ import {
 } from '../utils.js';
 import './ItemGrid.css';
 
-export default function ItemGrid({ categoryTitle }) {
+export default function ItemGrid({ categoryTitle, layout = 'carousel' }) {
   const { items, loading, error } = usePiecesByCategory(categoryTitle);
   const railRef = useRef(null);
   const [showAll, setShowAll] = useState(false);
-  const carouselItems = showAll ? items : [...items, ...items, ...items];
+  const isCarousel = layout === 'carousel';
+  const showGrid = !isCarousel || showAll;
+  const carouselItems = showGrid ? items : [...items, ...items, ...items];
 
   useLayoutEffect(() => {
     const rail = railRef.current;
-    if (!rail || showAll || items.length === 0) return;
+    if (!rail || showGrid || items.length === 0) return;
 
     const middleCopyStart = rail.children[items.length];
     if (middleCopyStart) {
       rail.scrollLeft = middleCopyStart.offsetLeft - rail.offsetLeft;
     }
-  }, [items.length, showAll]);
+  }, [items.length, showGrid]);
 
   function scrollItems(direction) {
     const rail = railRef.current;
@@ -67,20 +69,22 @@ export default function ItemGrid({ categoryTitle }) {
         <p className="empty-state">No pieces available in {categoryTitle} right now. Check back soon!</p>
       ) : (
         <>
-          <div className="item-grid-toolbar">
-            <button
-              type="button"
-              className="items-view-toggle"
-              aria-expanded={showAll}
-              onClick={() => setShowAll((current) => !current)}
-            >
-              {showAll ? 'Show carousel' : 'Show all'}
-            </button>
-          </div>
+          {isCarousel && (
+            <div className="item-grid-toolbar">
+              <button
+                type="button"
+                className="items-view-toggle"
+                aria-expanded={showAll}
+                onClick={() => setShowAll((current) => !current)}
+              >
+                {showAll ? 'Show carousel' : 'Show all'}
+              </button>
+            </div>
+          )}
           <div className="product-grid-frame">
             <div
               ref={railRef}
-              className={showAll ? 'product-grid product-grid-all' : 'product-grid product-grid-carousel'}
+              className={showGrid ? 'product-grid product-grid-all' : 'product-grid product-grid-carousel'}
             >
               {carouselItems.map((piece, index) => {
                 // Support both direct root fields and Strapi v4 nested attributes
@@ -112,7 +116,7 @@ export default function ItemGrid({ categoryTitle }) {
                 );
               })}
             </div>
-            {!showAll && items.length > 1 && (
+            {isCarousel && !showAll && items.length > 1 && (
               <div className="carousel-controls">
                 <button
                   type="button"

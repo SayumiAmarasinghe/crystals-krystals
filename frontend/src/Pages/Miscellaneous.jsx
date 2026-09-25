@@ -8,7 +8,7 @@ export default function Miscellaneous() {
   return (
     <div className="miscellaneous-page shop-container">
         <main className="page-container">
-          <ItemGrid categoryTitle="Miscellaneous" />
+          <ItemGrid categoryTitle="Miscellaneous" layout="grid" />
         </main>
     </div>
   );

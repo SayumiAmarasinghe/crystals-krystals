@@ -8,7 +8,7 @@ export default function Rings() {
   return (
     <div className="shop-container">
       <main className="page-container">
-        <ItemGrid categoryTitle="Rings" />
+        <ItemGrid categoryTitle="Rings" layout="grid" />
       </main>
     </div>
   );

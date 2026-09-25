@@ -7,8 +7,8 @@ import './ShopPages.css';
 export default function Necklaces() {
   return (
     <div className="necklace-page shop-container">
-        <main className="necklace-main">
-          <ItemGrid categoryTitle="Necklaces" />
+        <main className="page-container">
+          <ItemGrid categoryTitle="Necklaces" layout="grid" />
         </main>
     </div>
   );

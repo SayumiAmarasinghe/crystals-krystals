@@ -10,7 +10,7 @@ export default function Earrings() {
   return (
     <div className="shop-container">
       <main className="page-container">
-        <ItemGrid categoryTitle="Earrings" />
+        <ItemGrid categoryTitle="Earrings" layout="grid" />
       </main>
     </div>
   );
