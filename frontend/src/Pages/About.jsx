@@ -56,7 +56,7 @@ const teamMembers = [
   name: "Emily Quon",
   role: "Frontend Contributor",
   image: emilyPhoto,
-  description: "Upcoming sophomore with an interest in cybersecurity who enjoys playing badminton, reading romance novels, and watching K-dramas."
+  description: "Front-End Contributor who enjoys playing badminton and reading."
 },
 {
   id: 7,
