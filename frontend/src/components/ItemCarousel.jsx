@@ -1,0 +1,1 @@
+//add styling so that the carousel items are displayed correctly and look visually appealing
