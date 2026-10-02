@@ -21,7 +21,7 @@
     },
     "pieces": {
       "type": "relation",
-      "relation": "oneToMany",
+      "relation": "manyToMany",
       "target": "api::piece.piece",
       "mappedBy": "category"
     }

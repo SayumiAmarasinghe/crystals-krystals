@@ -9,11 +9,15 @@ import Shop from "./Pages/Shop";
 import About from "./Pages/About";
 import Contact from "./Pages/Contact";
 import CustomOrder from "./Pages/CustomOrder";
-import Earrings from "./Pages/Earrings";
+import Earrings from "./Pages/Earrings/Earrings";
 import Necklace from "./Pages/Necklace";
 import Rings from "./Pages/Rings";
 import Miscellaneous from "./Pages/Miscellaneous";
 import Test from "./Pages/Test";
+import GoldFilled from "./Pages/Earrings/GoldFilled";
+//import StainlessSteel from "./Pages/Earrings/StainlessSteel";
+//import Armcuff from "./Pages/Armcuffs";
+//import HairAccessories from "./Pages/HairAccessories";
 
 function App() {
   return (
@@ -30,6 +34,7 @@ function App() {
           <Route path="/contact" element={<Contact />} />
           <Route path="/custom-order" element={<CustomOrder />} />
           <Route path="/shop/earrings" element={<Earrings />} />
+          <Route path="/shop/earrings/goldfilled" element={<GoldFilled />} />
           <Route path="/shop/necklaces" element={<Necklace />} />
           <Route path="/shop/rings" element={<Rings />} />
           <Route path="shop/miscellaneous" element={<Miscellaneous />} />

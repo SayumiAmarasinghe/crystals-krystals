@@ -498,7 +498,7 @@ export interface ApiCategoryCategory extends Struct.CollectionTypeSchema {
     Name: Schema.Attribute.String &
       Schema.Attribute.Required &
       Schema.Attribute.Unique;
-    pieces: Schema.Attribute.Relation<'oneToMany', 'api::piece.piece'>;
+    pieces: Schema.Attribute.Relation<'manyToMany', 'api::piece.piece'>;
     publishedAt: Schema.Attribute.DateTime;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
@@ -517,7 +517,7 @@ export interface ApiPiecePiece extends Struct.CollectionTypeSchema {
     draftAndPublish: true;
   };
   attributes: {
-    category: Schema.Attribute.Relation<'manyToOne', 'api::category.category'>;
+    category: Schema.Attribute.Relation<'manyToMany', 'api::category.category'>;
     Collection: Schema.Attribute.String;
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
