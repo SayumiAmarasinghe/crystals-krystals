@@ -1,10 +1,10 @@
 {
   "kind": "collectionType",
-  "collectionName": "categories",
+  "collectionName": "materials",
   "info": {
-    "singularName": "category",
-    "pluralName": "categories",
-    "displayName": "Category"
+    "singularName": "material",
+    "pluralName": "materials",
+    "displayName": "Material"
   },
   "options": {
     "draftAndPublish": true
@@ -16,14 +16,11 @@
       "required": true,
       "unique": true
     },
-    "Description": {
-      "type": "richtext"
-    },
     "pieces": {
       "type": "relation",
       "relation": "oneToMany",
       "target": "api::piece.piece",
-      "mappedBy": "category"
+      "mappedBy": "material"
     }
   }
 }

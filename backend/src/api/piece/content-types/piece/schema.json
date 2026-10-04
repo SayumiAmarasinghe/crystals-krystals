@@ -36,8 +36,14 @@
     },
     "category": {
       "type": "relation",
-      "relation": "manyToMany",
+      "relation": "manyToOne",
       "target": "api::category.category",
+      "inversedBy": "pieces"
+    },
+    "material": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::material.material",
       "inversedBy": "pieces"
     }
   }
