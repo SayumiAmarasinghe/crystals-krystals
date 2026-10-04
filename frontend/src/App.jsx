@@ -15,7 +15,8 @@ import Rings from "./Pages/Rings";
 import Miscellaneous from "./Pages/Miscellaneous";
 import Test from "./Pages/Test";
 import GoldFilled from "./Pages/Earrings/GoldFilled";
-//import StainlessSteel from "./Pages/Earrings/StainlessSteel";
+import StainlessSteel from "./Pages/Earrings/StainlessSteel";
+("./Pages/Earrings/StainlessSteel");
 //import Armcuff from "./Pages/Armcuffs";
 //import HairAccessories from "./Pages/HairAccessories";
 
@@ -35,6 +36,10 @@ function App() {
           <Route path="/custom-order" element={<CustomOrder />} />
           <Route path="/shop/earrings" element={<Earrings />} />
           <Route path="/shop/earrings/goldfilled" element={<GoldFilled />} />
+          <Route
+            path="/shop/earrings/stainlesssteel"
+            element={<StainlessSteel />}
+          />
           <Route path="/shop/necklaces" element={<Necklace />} />
           <Route path="/shop/rings" element={<Rings />} />
           <Route path="shop/miscellaneous" element={<Miscellaneous />} />

@@ -1,19 +1,27 @@
 // frontend/src/components/ItemGrid.jsx
-import { useLayoutEffect, useRef, useState } from 'react';
-import { usePiecesByCategory } from '../hooks/usePiecesByCategory.js';
-import { 
-  getPieceName, 
-  getPieceDescription, 
-  getPiecePhotoUrl, 
+import { useLayoutEffect, useRef, useState } from "react";
+import { usePiecesByCategory } from "../hooks/usePiecesByCategory.js";
+import {
+  getPieceName,
+  getPieceDescription,
+  getPiecePhotoUrl,
   getPlainText,
-} from '../utils.js';
-import './ItemGrid.css';
+} from "../utils.js";
+import "./ItemGrid.css";
 
-export default function ItemGrid({ categoryTitle, layout = 'carousel' }) {
-  const { items, loading, error } = usePiecesByCategory(categoryTitle);
+export default function ItemGrid({
+  categoryTitle,
+  material,
+  layout = "carousel",
+}) {
+  const { items, loading, error } = usePiecesByCategory(
+    categoryTitle,
+    material,
+  );
+  const heading = material ? `${material} ${categoryTitle}` : categoryTitle;
   const railRef = useRef(null);
   const [showAll, setShowAll] = useState(false);
-  const isCarousel = layout === 'carousel';
+  const isCarousel = layout === "carousel";
   const showGrid = !isCarousel || showAll;
   const carouselItems = showGrid ? items : [...items, ...items, ...items];
 
@@ -44,29 +52,33 @@ export default function ItemGrid({ categoryTitle, layout = 'carousel' }) {
 
     if (direction > 0 && nextPosition > maxScroll) {
       currentIndex -= items.length;
-      rail.scrollLeft = rail.children[currentIndex].offsetLeft - rail.offsetLeft;
+      rail.scrollLeft =
+        rail.children[currentIndex].offsetLeft - rail.offsetLeft;
       nextIndex = currentIndex + 1;
     } else if (direction < 0 && (nextIndex < 0 || nextPosition < 0)) {
       currentIndex += items.length;
-      rail.scrollLeft = rail.children[currentIndex].offsetLeft - rail.offsetLeft;
+      rail.scrollLeft =
+        rail.children[currentIndex].offsetLeft - rail.offsetLeft;
       nextIndex = currentIndex - 1;
     }
 
     rail.scrollTo({
       left: rail.children[nextIndex].offsetLeft - rail.offsetLeft,
-      behavior: 'smooth',
+      behavior: "smooth",
     });
   }
 
-  if (loading) return <div className="loading-state">Loading {categoryTitle}...</div>;
+  if (loading) return <div className="loading-state">Loading {heading}...</div>;
   if (error) return <div className="error-state">Error: {error}</div>;
 
   return (
     <section className="category-section">
-      <h2>{categoryTitle}</h2>
+      <h2>{heading}</h2>
 
       {items.length === 0 ? (
-        <p className="empty-state">No pieces available in {categoryTitle} right now. Check back soon!</p>
+        <p className="empty-state">
+          No pieces available in {heading} right now. Check back soon!
+        </p>
       ) : (
         <>
           {isCarousel && (
@@ -77,19 +89,23 @@ export default function ItemGrid({ categoryTitle, layout = 'carousel' }) {
                 aria-expanded={showAll}
                 onClick={() => setShowAll((current) => !current)}
               >
-                {showAll ? 'Show carousel' : 'Show all'}
+                {showAll ? "Show carousel" : "Show all"}
               </button>
             </div>
           )}
           <div className="product-grid-frame">
             <div
               ref={railRef}
-              className={showGrid ? 'product-grid product-grid-all' : 'product-grid product-grid-carousel'}
+              className={
+                showGrid
+                  ? "product-grid product-grid-all"
+                  : "product-grid product-grid-carousel"
+              }
             >
               {carouselItems.map((piece, index) => {
                 // Support both direct root fields and Strapi v4 nested attributes
                 const name = getPieceName(piece);
-                const description = getPieceDescription(piece)
+                const description = getPieceDescription(piece);
 
                 // Extract the first photo URL (prefer thumbnail for grid display if available)
                 const photoUrl = getPiecePhotoUrl(piece);
@@ -100,7 +116,7 @@ export default function ItemGrid({ categoryTitle, layout = 'carousel' }) {
                       {photoUrl ? (
                         <img
                           src={photoUrl}
-                          alt={name || 'Jewelry piece'}
+                          alt={name || "Jewelry piece"}
                           className="product-image"
                         />
                       ) : (
@@ -110,7 +126,9 @@ export default function ItemGrid({ categoryTitle, layout = 'carousel' }) {
 
                     <div className="product-info">
                       <h3>{name}</h3>
-                      <p className="product-description">{getPlainText(description)}</p>
+                      <p className="product-description">
+                        {getPlainText(description)}
+                      </p>
                     </div>
                   </div>
                 );
@@ -121,18 +139,24 @@ export default function ItemGrid({ categoryTitle, layout = 'carousel' }) {
                 <button
                   type="button"
                   className="carousel-arrow"
-                  aria-label={`Show previous ${categoryTitle.toLowerCase()} items`}
+                  aria-label={`Show previous ${heading.toLowerCase()} items`}
                   onClick={() => scrollItems(-1)}
                 >
-                  <span className="arrow-icon arrow-icon-previous" aria-hidden="true" />
+                  <span
+                    className="arrow-icon arrow-icon-previous"
+                    aria-hidden="true"
+                  />
                 </button>
                 <button
                   type="button"
                   className="carousel-arrow"
-                  aria-label={`Show next ${categoryTitle.toLowerCase()} items`}
+                  aria-label={`Show next ${heading.toLowerCase()} items`}
                   onClick={() => scrollItems(1)}
                 >
-                  <span className="arrow-icon arrow-icon-next" aria-hidden="true" />
+                  <span
+                    className="arrow-icon arrow-icon-next"
+                    aria-hidden="true"
+                  />
                 </button>
               </div>
             )}

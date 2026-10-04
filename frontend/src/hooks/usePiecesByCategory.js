@@ -16,20 +16,20 @@
  *
  *   function MyComponent({ categoryTitle }) {
  *     const { items, loading, error } = usePiecesByCategory(categoryTitle);
- * 
+ *
  *     if (loading) return <p>Loading...</p>;
  *     if (error) return <p>{error}</p>;
- * 
+ *
  *     return items.map(item => ...);
  *   }
  *
  * @param {string} categoryTitle - category name to filter by, e.g. "Earrings"
  * @returns {{ items: Array, loading: boolean, error: string|null }}
  */
-import { useState, useEffect } from 'react';
-import { fetchPiecesByCategory } from '../utils.js';
+import { useState, useEffect } from "react";
+import { fetchPiecesByCategory } from "../utils.js";
 
-export function usePiecesByCategory(categoryTitle) {
+export function usePiecesByCategory(categoryTitle, material) {
   const [items, setItems] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -44,10 +44,9 @@ export function usePiecesByCategory(categoryTitle) {
         setLoading(true);
         setError(null);
 
-        const pieces = await fetchPiecesByCategory(categoryTitle);
+        const pieces = await fetchPiecesByCategory(categoryTitle, material);
 
         if (!cancelled) setItems(pieces);
-
       } catch (err) {
         if (!cancelled) setError(err.message);
       } finally {
@@ -59,7 +58,7 @@ export function usePiecesByCategory(categoryTitle) {
     return () => {
       cancelled = true;
     };
-  }, [categoryTitle]);
+  }, [categoryTitle, material]);
 
   return { items, loading, error };
 }

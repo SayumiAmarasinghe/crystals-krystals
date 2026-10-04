@@ -7,30 +7,27 @@
  * components don't have to guess.
  *
  * Usage:
- * import { 
- *    STRAPI_URL, 
- *    fetchPiecesByCategory, 
- *    fetchCategories, 
+ * import {
+ *    STRAPI_URL,
+ *    fetchPiecesByCategory,
+ *    fetchCategories,
  *    fetchPieceById,
  *    fetchCategoryById,
  *    fetchAboutPage,
  *    getPieceName,
- *    getPieceDescription, 
- *    getPieceCollection, 
- *    getPiecePhotoUrl, 
+ *    getPieceDescription,
+ *    getPieceCollection,
+ *    getPiecePhotoUrl,
  *    getPieceDocumentId,
- *    getPlainText 
+ *    getPlainText
  * } from '../utils.js';
- * 
+ *
  */
-
-
 
 // Base URL of the Strapi backend. Falls back to localhost for local dev.
 // Set VITE_STRAPI_URL in your .env file for staging/production.
-export const STRAPI_URL = import.meta.env.VITE_STRAPI_URL || "http://localhost:1337";
-
-
+export const STRAPI_URL =
+  import.meta.env.VITE_STRAPI_URL || "http://localhost:1337";
 
 /**
  * fetchPiecesByCategory(categoryTitle)
@@ -42,20 +39,23 @@ export const STRAPI_URL = import.meta.env.VITE_STRAPI_URL || "http://localhost:1
  * pieces and filter client-side.
  *
  * @param {string} categoryTitle - category name to filter by, e.g. "Earrings"
+ * @param {string} [material] - optional material name ex: "Gold Filled"
  * @returns {Promise<Array>} array of piece objects (empty array if none found)
  * @throws {Error} if the request fails
  *
  * Example: const pieces = await fetchPiecesByCategory("Earrings");
  */
-export async function fetchPiecesByCategory(categoryTitle) {
-  const url = `${STRAPI_URL}/api/pieces?populate=*&filters[category][Name][$eq]=${encodeURIComponent(categoryTitle)}`;
+export async function fetchPiecesByCategory(categoryTitle, material) {
+  let url = `${STRAPI_URL}/api/pieces?populate=*&filters[category][Name][$eq]=${encodeURIComponent(categoryTitle)}`;
+  if (material) {
+    //optional material field
+    url += `&filters[material][Name][$eq]=${encodeURIComponent(material)}`;
+  }
   const res = await fetch(url);
-  if (!res.ok) throw new Error('Failed to load items');
+  if (!res.ok) throw new Error("Failed to load items");
   const data = await res.json();
   return data.data || [];
 }
-
-
 
 /**
  * fetchCategories()
@@ -73,12 +73,10 @@ export async function fetchPiecesByCategory(categoryTitle) {
  */
 export async function fetchCategories() {
   const res = await fetch(`${STRAPI_URL}/api/categories?populate=*`);
-  if (!res.ok) throw new Error('Failed to load categories');
+  if (!res.ok) throw new Error("Failed to load categories");
   const data = await res.json();
   return data.data || [];
 }
-
-
 
 /**
  * fetchPieceById(documentId)
@@ -97,12 +95,10 @@ export async function fetchCategories() {
  */
 export async function fetchPieceById(documentId) {
   const res = await fetch(`${STRAPI_URL}/api/pieces/${documentId}?populate=*`);
-  if (!res.ok) throw new Error('Failed to load item');
+  if (!res.ok) throw new Error("Failed to load item");
   const data = await res.json();
   return data.data || null;
 }
-
-
 
 /**
  * fetchCategoryById(documentId)
@@ -119,13 +115,13 @@ export async function fetchPieceById(documentId) {
  * Example: const category = await fetchCategoryById(category.documentId);
  */
 export async function fetchCategoryById(documentId) {
-  const res = await fetch(`${STRAPI_URL}/api/categories/${documentId}?populate=*`);
-  if (!res.ok) throw new Error('Failed to load category');
+  const res = await fetch(
+    `${STRAPI_URL}/api/categories/${documentId}?populate=*`,
+  );
+  if (!res.ok) throw new Error("Failed to load category");
   const data = await res.json();
   return data.data || null;
 }
-
-
 
 /**
  * fetchAboutPage()
@@ -147,12 +143,10 @@ export async function fetchCategoryById(documentId) {
  */
 export async function fetchAboutPage() {
   const res = await fetch(`${STRAPI_URL}/api/about?populate=*`);
-  if (!res.ok) throw new Error('Failed to load about page');
+  if (!res.ok) throw new Error("Failed to load about page");
   const data = await res.json();
   return data.data || null; // note: object, not array — see comment above
 }
-
-
 
 /**
  * getPlainText(blocks)
@@ -168,18 +162,18 @@ export async function fetchAboutPage() {
  */
 export const getPlainText = (blocks) => {
   // Return an empty string if there are no blocks
-  if (!blocks || !Array.isArray(blocks)) return ''; 
+  if (!blocks || !Array.isArray(blocks)) return "";
 
-  return blocks.map(block => {
-    // Check if the block has children before trying to map them
-    if (!block.children) return '';
-    
-    // Combine all the text pieces within a single paragraph/block
-    return block.children.map(child => child.text || '').join('');
-  }).join('\n'); // Join the separate paragraphs with a line break
+  return blocks
+    .map((block) => {
+      // Check if the block has children before trying to map them
+      if (!block.children) return "";
+
+      // Combine all the text pieces within a single paragraph/block
+      return block.children.map((child) => child.text || "").join("");
+    })
+    .join("\n"); // Join the separate paragraphs with a line break
 };
-
-
 
 /**
  * getPieceName(piece)
@@ -200,8 +194,6 @@ export function getPieceName(piece) {
   return piece.Name || piece.attributes?.Name;
 }
 
-
-
 /**
  * getPieceDescription(piece)
  * ---------------------------------------------------------------------------
@@ -216,8 +208,6 @@ export function getPieceName(piece) {
 export function getPieceDescription(piece) {
   return piece.Description || piece.attributes?.Description;
 }
-
-
 
 /**
  * getPieceCollection(piece)
@@ -234,8 +224,6 @@ export function getPieceDescription(piece) {
 export function getPieceCollection(piece) {
   return piece.Collection || piece.attributes?.Collection || null;
 }
-
-
 
 /**
  * getPiecePhotoUrl(piece)
@@ -260,8 +248,6 @@ export function getPiecePhotoUrl(piece) {
     firstPhoto?.attributes?.url;
   return path ? `${STRAPI_URL}${path}` : null;
 }
-
-
 
 /**
  * getPieceDocumentId(piece)
