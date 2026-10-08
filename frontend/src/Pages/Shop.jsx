@@ -2,7 +2,7 @@ import React from 'react';
 import ItemGrid from '../components/ItemGrid';
 import './ShopPages.css';
 
-const categories = ['Earrings', 'Necklaces', 'Rings', 'Miscellaneous'];
+const categories = ['Earrings', 'Necklaces', 'Rings', 'Armcuffs', 'Hair Accessories', 'Miscellaneous'];
 
 const Shop = () => {
   return (
