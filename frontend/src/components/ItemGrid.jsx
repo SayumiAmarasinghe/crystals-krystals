@@ -107,7 +107,7 @@ export default function ItemGrid({
                 const name = getPieceName(piece);
                 const description = getPieceDescription(piece);
 
-                // Extract the first photo URL (prefer thumbnail for grid display if available)
+                // Get the first photo URL (see getPiecePhotoUrl in utils.js)
                 const photoUrl = getPiecePhotoUrl(piece);
 
                 return (

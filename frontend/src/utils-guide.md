@@ -10,12 +10,13 @@ how to use each piece.
 ## Why this file exists
 
 Without `utils.js`, every component that needs jewelry data would have to:
+
 - know the Strapi URL
 - write its own `fetch()` call
 - know the exact shape of Strapi's JSON response
 - handle loading/error states
 - know that `Description` isn't a plain string, it's a weird array
-- know that images need the base URL glued onto them
+- know whether an image URL is complete (Cloudinary) or needs the base URL added (local uploads)
 
 That's a lot to repeat in every component, and a lot of ways to get it
 wrong. `utils.js` does all of that once, correctly, so you just import a
@@ -48,13 +49,14 @@ component uses.
 These functions go get data from Strapi. They're all `async`, so you use
 `await` (usually inside a `useEffect` or a custom hook).
 
-| Function | What it gets you |
-|---|---|
-| `fetchPiecesByCategory("Earrings")` | All pieces in one category |
-| `fetchCategories()` | The list of all categories (Earrings, Necklaces, etc.) |
-| `fetchPieceById(documentId)` | One specific piece (for a detail page) |
-| `fetchCategoryById(documentId)` | One specific category |
-| `fetchAboutPage()` | The About page content |
+| Function                                           | What it gets you                                       |
+| -------------------------------------------------- | ------------------------------------------------------ |
+| `fetchPiecesByCategory("Earrings")`                | All pieces in one category                             |
+| `fetchCategories()`                                | The list of all categories (Earrings, Necklaces, etc.) |
+| `fetchPieceById(documentId)`                       | One specific piece (for a detail page)                 |
+| `fetchCategoryById(documentId)`                    | One specific category                                  |
+| `fetchAboutPage()`                                 | The About page content                                 |
+| `fetchPiecesByCategory("Earrings", "Gold Filled")` | Pieces in one category with one material               |
 
 ### Example
 
@@ -77,7 +79,7 @@ over it or treat it like a list.
 
 ```javascript
 const about = await fetchAboutPage();
-console.log(about.Name); // ✅ direct object access
+console.log(getPlainText(about?.Story)); // ✅ direct object access
 ```
 
 ---
@@ -88,13 +90,13 @@ Once you have a piece object (from `fetchPiecesByCategory`, for example),
 use these functions to safely read its fields. Don't reach into
 `piece.Name` or `piece.Photo` directly — use the helpers instead.
 
-| Function | Returns | Notes |
-|---|---|---|
-| `getPieceName(piece)` | string | The piece's name |
-| `getPieceDescription(piece)` | array | Raw rich-text — pass to `getPlainText()` before displaying |
-| `getPieceCollection(piece)` | string or `null` | Not every piece has one — always check before showing it |
-| `getPiecePhotoUrl(piece)` | string or `null` | A ready-to-use image URL — no need to add the base URL yourself |
-| `getPieceDocumentId(piece)` | string | Use this (not `piece.id`) when building links or calling `fetchPieceById()` |
+| Function                     | Returns          | Notes                                                                       |
+| ---------------------------- | ---------------- | --------------------------------------------------------------------------- |
+| `getPieceName(piece)`        | string           | The piece's name                                                            |
+| `getPieceDescription(piece)` | array            | Raw rich-text — pass to `getPlainText()` before displaying                  |
+| `getPieceCollection(piece)`  | string or `null` | Not every piece has one — always check before showing it                    |
+| `getPiecePhotoUrl(piece)`    | string or `null` | A ready-to-use image URL — no need to add the base URL yourself             |
+| `getPieceDocumentId(piece)`  | string           | Use this (not `piece.id`) when building links or calling `fetchPieceById()` |
 
 ### Why use these instead of `piece.Name` directly?
 
@@ -162,7 +164,7 @@ Every piece and category has two identifiers:
 
 - `piece.id` — a plain number, fine for React's `key` prop in a list
 - `piece.documentId` — the identifier Strapi wants when you fetch that
-  *specific* item again later (like for a detail page)
+  _specific_ item again later (like for a detail page)
 
 ```jsx
 // ✅ fine — id is only used for React's key here, not an API call
@@ -197,7 +199,11 @@ function MyComponent({ categoryTitle }) {
 
 This hook already calls `fetchPiecesByCategory` for you and handles all
 the loading/error bookkeeping — you only need to worry about how to
-*display* the pieces, not how to *fetch* them.
+_display_ the pieces, not how to _fetch_ them.
+
+Pass a material as the second argument to narrow it down:
+`usePiecesByCategory('Earrings', 'Gold Filled')`. The material name must
+match the Material's `Name` in Strapi exactly.
 
 ---
 

@@ -228,10 +228,22 @@ export function getPieceCollection(piece) {
 /**
  * getPiecePhotoUrl(piece)
  * ---------------------------------------------------------------------------
- * Returns a ready-to-use, full image URL (STRAPI_URL + path) for a piece's
- * first photo, preferring the "medium" format, then "thumbnail", then the
- * original. Photo is always an array in Strapi (even for a single image),
- * so this always reads the first entry.
+ * Returns a ready-to-use, full image URL for a piece's first photo.
+ *
+ * Uses the "large" format (fits in 1000px) when it exists. If it doesn't,
+ * the original is already 1000px or smaller, so the original is the
+ * sharpest option. Strapi only creates a format when the original is
+ * bigger than that size, so smaller uploads have no large/medium.
+ *
+ * Don't use "thumbnail" or "small" for grid cards. They're too small and
+ * look blurry when stretched.
+ *
+ * Images stored in Cloudinary come back as full URLs and are returned as-is.
+ * Images stored locally come back as relative paths ("/uploads/..."), so
+ * STRAPI_URL is added in front.
+ *
+ * Photo is always an array in Strapi (even for a single image), so this
+ * always reads the first entry.
  *
  * @param {Object} piece
  * @returns {string|null} full image URL, or null if there's no photo
@@ -242,11 +254,13 @@ export function getPiecePhotoUrl(piece) {
   const photos = piece.Photo || piece.attributes?.Photo?.data || [];
   const firstPhoto = Array.isArray(photos) ? photos[0] : photos;
   const path =
-    firstPhoto?.formats?.medium?.url ||
-    firstPhoto?.formats?.thumbnail?.url ||
-    firstPhoto?.url ||
-    firstPhoto?.attributes?.url;
-  return path ? `${STRAPI_URL}${path}` : null;
+    firstPhoto?.formats?.large?.url || // resized version, fits in 1000px
+    firstPhoto?.url || // original (only reached if it's ≤1000px)
+    firstPhoto?.attributes?.url; // original, old Strapi v4 shape
+
+  if (!path) return null;
+  // Cloudinary returns full URLs; the local provider returns relative paths
+  return path.startsWith("http") ? path : `${STRAPI_URL}${path}`;
 }
 
 /**
