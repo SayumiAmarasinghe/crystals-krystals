@@ -40,5 +40,7 @@
   "strapi": {
     "uuid": "4906fe26-9046-4182-b8f8-85a6f7a871e1",
     "installId": "85d33fa87424c274bd833b9f23f69fbbb1174854a716ba86508ee5fd95dad655"
-  }
+  },
+  "predevelop": "node scripts/check-up-to-date.cjs",
+  "prestart": "node scripts/check-up-to-date.cjs"
 }
