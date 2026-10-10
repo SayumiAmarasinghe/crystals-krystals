@@ -14,20 +14,18 @@
     "Name": {
       "type": "string",
       "required": true,
-      "unique": true
+      "unique": false
     },
     "Photo": {
       "type": "media",
-      "multiple": true,
+      "multiple": false,
+      "required": false,
       "allowedTypes": [
-        "images",
-        "files",
-        "videos",
-        "audios"
+        "images"
       ]
     },
     "Description": {
-      "type": "richtext",
+      "type": "blocks",
       "required": true
     }
   }
