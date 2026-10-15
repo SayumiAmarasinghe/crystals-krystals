@@ -561,6 +561,7 @@ export interface ApiContactFormContactForm extends Struct.CollectionTypeSchema {
     Message: Schema.Attribute.Blocks & Schema.Attribute.Required;
     Name: Schema.Attribute.String & Schema.Attribute.Required;
     publishedAt: Schema.Attribute.DateTime;
+    SubmittedAt: Schema.Attribute.Date;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
