@@ -1,0 +1,33 @@
+{
+  "kind": "collectionType",
+  "collectionName": "company_stories",
+  "info": {
+    "singularName": "company-story",
+    "pluralName": "company-stories",
+    "displayName": "Company Story"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "Name": {
+      "type": "string",
+      "required": true
+    },
+    "Description": {
+      "type": "blocks",
+      "required": true
+    },
+    "Photo": {
+      "type": "media",
+      "multiple": true,
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ]
+    }
+  }
+}
