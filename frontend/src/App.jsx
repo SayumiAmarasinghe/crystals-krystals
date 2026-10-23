@@ -9,14 +9,21 @@ import Shop from "./Pages/Shop";
 import About from "./Pages/About";
 import Contact from "./Pages/Contact";
 import CustomOrder from "./Pages/CustomOrder";
-import Earrings from "./Pages/Earrings";
+import Earrings from "./Pages/Earrings/Earrings";
 import Necklace from "./Pages/Necklace";
 import Rings from "./Pages/Rings";
 import Miscellaneous from "./Pages/Miscellaneous";
 import Armcuffs from "./Pages/Armcuffs";
 import GoldFilledEarrings from "./Pages/Earrings/GoldFilled";
 import StainlessSteelEarrings from "./Pages/Earrings/StainlessSteel";
+import HairAccessories from "./Pages/HairAccessories";
 import Test from "./Pages/Test";
+
+import GoldFilled from "./Pages/Earrings/GoldFilled";
+import StainlessSteel from "./Pages/Earrings/StainlessSteel";
+("./Pages/Earrings/StainlessSteel");
+//import Armcuff from "./Pages/Armcuffs";
+//import HairAccessories from "./Pages/HairAccessories";
 
 function App() {
   return (
@@ -39,6 +46,7 @@ function App() {
           <Route path="/shop/rings" element={<Rings />} />
           <Route path="shop/miscellaneous" element={<Miscellaneous />} />
           <Route path="/shop/armcuffs" element={<Armcuffs />} />
+           <Route path="shop/hairaccessories" element={<HairAccessories />} />
           <Route path="/test" element={<Test />} />
           {/* Optional: A catch-all route for 404 Not Found */}
           <Route

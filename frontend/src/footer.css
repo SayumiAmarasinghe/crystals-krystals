@@ -60,7 +60,7 @@
 }
 
 .footer-nav a {
-  font-family: serif;
+  font-family: 'Podkova', serif;
   font-size: 1.125rem;
   font-weight: bold;
   color: #111827;
@@ -77,7 +77,7 @@
 }
 
 .footer-copyright p {
-  font-family: serif;
+  font-family: 'Podkova', serif;
   font-size: 0.75rem;
   color: #9ca3af;
   margin: 0;

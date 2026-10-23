@@ -16,14 +16,14 @@
       "required": true,
       "unique": true
     },
-    "Description": {
-      "type": "richtext"
-    },
     "pieces": {
       "type": "relation",
       "relation": "oneToMany",
       "target": "api::piece.piece",
       "mappedBy": "category"
+    },
+    "Description": {
+      "type": "blocks"
     }
   }
 }

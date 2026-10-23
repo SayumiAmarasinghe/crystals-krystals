@@ -1,4 +1,4 @@
-﻿{
+{
   "name": "backend",
   "version": "0.1.0",
   "private": true,
@@ -33,9 +33,6 @@
     "@types/react-dom": "^18",
     "typescript": "^5"
   },
-  "overrides": {
-    "@strapi/admin": "5.53.0"
-  },
   "engines": {
     "node": ">=20.0.0 <=24.x.x",
     "npm": ">=6.0.0"
@@ -43,5 +40,8 @@
   "strapi": {
     "uuid": "4906fe26-9046-4182-b8f8-85a6f7a871e1",
     "installId": "85d33fa87424c274bd833b9f23f69fbbb1174854a716ba86508ee5fd95dad655"
-  }
+  },
+  "predev": "node scripts/check-up-to-date.cjs",
+  "predevelop": "node scripts/check-up-to-date.cjs",
+  "prestart": "node scripts/check-up-to-date.cjs"
 }
