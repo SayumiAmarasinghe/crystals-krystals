@@ -28,7 +28,15 @@ const Navbar = () => {
           
           {isShopOpen && (
             <div className="dropdown-menu">
-              <Link to="/shop/earrings">Earrings</Link>
+              <div className="dropdown-submenu">
+                <Link to="/shop/earrings" className="dropdown-submenu-toggle">
+                  Earrings
+                </Link>
+                <div className="dropdown-submenu-menu">
+                  <Link to="/shop/earrings/goldfilled">Gold Filled</Link>
+                  <Link to="/shop/earrings/stainlesssteel">Stainless Steel</Link>
+                </div>
+              </div>
               <Link to="/shop/necklaces">Necklaces</Link>
               <Link to="/shop/rings">Rings</Link>
               <Link to="/shop/armcuffs">Armcuffs</Link>

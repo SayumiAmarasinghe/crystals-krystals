@@ -30,7 +30,7 @@ export const STRAPI_URL =
   import.meta.env.VITE_STRAPI_URL || "http://localhost:1337";
 
 /**
- * fetchPiecesByCategory(categoryTitle)
+ * fetchPiecesByCategory(categoryTitle, material)
  * ---------------------------------------------------------------------------
  * Fetches only the pieces belonging to a given category, using Strapi's
  * own filter query param instead of downloading every piece and filtering
@@ -43,12 +43,11 @@ export const STRAPI_URL =
  * @returns {Promise<Array>} array of piece objects (empty array if none found)
  * @throws {Error} if the request fails
  *
- * Example: const pieces = await fetchPiecesByCategory("Earrings");
+ * Example: const pieces = await fetchPiecesByCategory("Earrings", "Gold Filled");
  */
 export async function fetchPiecesByCategory(categoryTitle, material) {
   let url = `${STRAPI_URL}/api/pieces?populate=*&filters[category][Name][$eq]=${encodeURIComponent(categoryTitle)}`;
   if (material) {
-    //optional material field
     url += `&filters[material][Name][$eq]=${encodeURIComponent(material)}`;
   }
   const res = await fetch(url);
