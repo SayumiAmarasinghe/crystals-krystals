@@ -13,6 +13,7 @@ import Earrings from "./Pages/Earrings";
 import Necklace from "./Pages/Necklace";
 import Rings from "./Pages/Rings";
 import Miscellaneous from "./Pages/Miscellaneous";
+import Armcuffs from "./Pages/Armcuffs";
 import Test from "./Pages/Test";
 
 function App() {
@@ -33,6 +34,7 @@ function App() {
           <Route path="/shop/necklaces" element={<Necklace />} />
           <Route path="/shop/rings" element={<Rings />} />
           <Route path="shop/miscellaneous" element={<Miscellaneous />} />
+          <Route path="/shop/armcuffs" element={<Armcuffs />} />
           <Route path="/test" element={<Test />} />
           {/* Optional: A catch-all route for 404 Not Found */}
           <Route
