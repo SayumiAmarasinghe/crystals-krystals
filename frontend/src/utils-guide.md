@@ -51,6 +51,7 @@ These functions go get data from Strapi. They're all `async`, so you use
 | Function | What it gets you |
 |---|---|
 | `fetchPiecesByCategory("Earrings")` | All pieces in one category |
+| `fetchPiecesByCategory("Earrings", "Gold Filled")` | Pieces in a category filtered by material |
 | `fetchCategories()` | The list of all categories (Earrings, Necklaces, etc.) |
 | `fetchPieceById(documentId)` | One specific piece (for a detail page) |
 | `fetchCategoryById(documentId)` | One specific category |
@@ -61,6 +62,8 @@ These functions go get data from Strapi. They're all `async`, so you use
 ```javascript
 const pieces = await fetchPiecesByCategory("Earrings");
 // pieces is now an array of piece objects, ready to use
+
+const goldFilledEarrings = await fetchPiecesByCategory("Earrings", "Gold Filled");
 ```
 
 > 💡 **Tip:** If you're building a new component that shows pieces by

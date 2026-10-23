@@ -29,7 +29,7 @@
 import { useState, useEffect } from 'react';
 import { fetchPiecesByCategory } from '../utils.js';
 
-export function usePiecesByCategory(categoryTitle) {
+export function usePiecesByCategory(categoryTitle, material) {
   const [items, setItems] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -44,7 +44,7 @@ export function usePiecesByCategory(categoryTitle) {
         setLoading(true);
         setError(null);
 
-        const pieces = await fetchPiecesByCategory(categoryTitle);
+        const pieces = await fetchPiecesByCategory(categoryTitle, material);
 
         if (!cancelled) setItems(pieces);
 
@@ -59,7 +59,7 @@ export function usePiecesByCategory(categoryTitle) {
     return () => {
       cancelled = true;
     };
-  }, [categoryTitle]);
+  }, [categoryTitle, material]);
 
   return { items, loading, error };
 }

@@ -101,6 +101,34 @@
   color: #111827;
 }
 
+.dropdown-submenu {
+  position: relative;
+}
+
+.dropdown-submenu-toggle::after {
+  content: '›';
+  float: right;
+  margin-left: 1rem;
+}
+
+.dropdown-submenu-menu {
+  position: absolute;
+  top: 0;
+  left: 100%;
+  display: none;
+  flex-direction: column;
+  min-width: 180px;
+  padding: 0.75rem 0;
+  border-radius: 4px;
+  background-color: #f3d7e0;
+  box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.12);
+}
+
+.dropdown-submenu:hover .dropdown-submenu-menu,
+.dropdown-submenu:focus-within .dropdown-submenu-menu {
+  display: flex;
+}
+
 /* --- Mobile Adjustments --- */
 @media (max-width: 600px) {
   .navbar-logo a {
@@ -118,5 +146,9 @@
   .dropdown-menu {
     left: 50%;
     transform: translateX(-50%); /* Centers dropdown on mobile */
+  }
+
+  .dropdown-submenu-menu {
+    left: 100%;
   }
 }

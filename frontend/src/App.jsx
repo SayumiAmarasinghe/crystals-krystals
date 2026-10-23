@@ -14,6 +14,8 @@ import Necklace from "./Pages/Necklace";
 import Rings from "./Pages/Rings";
 import Miscellaneous from "./Pages/Miscellaneous";
 import Armcuffs from "./Pages/Armcuffs";
+import GoldFilledEarrings from "./Pages/Earrings/GoldFilled";
+import StainlessSteelEarrings from "./Pages/Earrings/StainlessSteel";
 import Test from "./Pages/Test";
 
 function App() {
@@ -31,6 +33,8 @@ function App() {
           <Route path="/contact" element={<Contact />} />
           <Route path="/custom-order" element={<CustomOrder />} />
           <Route path="/shop/earrings" element={<Earrings />} />
+          <Route path="/shop/earrings/goldfilled" element={<GoldFilledEarrings />} />
+          <Route path="/shop/earrings/stainlesssteel" element={<StainlessSteelEarrings />} />
           <Route path="/shop/necklaces" element={<Necklace />} />
           <Route path="/shop/rings" element={<Rings />} />
           <Route path="shop/miscellaneous" element={<Miscellaneous />} />

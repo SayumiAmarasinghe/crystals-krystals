@@ -9,8 +9,9 @@ import {
 } from '../utils.js';
 import './ItemGrid.css';
 
-export default function ItemGrid({ categoryTitle, layout = 'carousel' }) {
-  const { items, loading, error } = usePiecesByCategory(categoryTitle);
+export default function ItemGrid({ categoryTitle, material, layout = 'carousel' }) {
+  const heading = material ? `${material} ${categoryTitle}` : categoryTitle;
+  const { items, loading, error } = usePiecesByCategory(categoryTitle, material);
   const railRef = useRef(null);
   const [showAll, setShowAll] = useState(false);
   const isCarousel = layout === 'carousel';
@@ -58,15 +59,15 @@ export default function ItemGrid({ categoryTitle, layout = 'carousel' }) {
     });
   }
 
-  if (loading) return <div className="loading-state">Loading {categoryTitle}...</div>;
+  if (loading) return <div className="loading-state">Loading {heading}...</div>;
   if (error) return <div className="error-state">Error: {error}</div>;
 
   return (
     <section className="category-section">
-      <h2>{categoryTitle}</h2>
+      <h2>{heading}</h2>
 
       {items.length === 0 ? (
-        <p className="empty-state">No pieces available in {categoryTitle} right now. Check back soon!</p>
+        <p className="empty-state">No pieces available in {heading} right now. Check back soon!</p>
       ) : (
         <>
           {isCarousel && (
@@ -121,7 +122,7 @@ export default function ItemGrid({ categoryTitle, layout = 'carousel' }) {
                 <button
                   type="button"
                   className="carousel-arrow"
-                  aria-label={`Show previous ${categoryTitle.toLowerCase()} items`}
+                  aria-label={`Show previous ${heading.toLowerCase()} items`}
                   onClick={() => scrollItems(-1)}
                 >
                   <span className="arrow-icon arrow-icon-previous" aria-hidden="true" />
@@ -129,7 +130,7 @@ export default function ItemGrid({ categoryTitle, layout = 'carousel' }) {
                 <button
                   type="button"
                   className="carousel-arrow"
-                  aria-label={`Show next ${categoryTitle.toLowerCase()} items`}
+                  aria-label={`Show next ${heading.toLowerCase()} items`}
                   onClick={() => scrollItems(1)}
                 >
                   <span className="arrow-icon arrow-icon-next" aria-hidden="true" />
