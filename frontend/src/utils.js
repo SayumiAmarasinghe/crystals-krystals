@@ -45,11 +45,34 @@ export const STRAPI_URL =
  *
  * Example: const pieces = await fetchPiecesByCategory("Earrings", "Gold Filled");
  */
-export async function fetchPiecesByCategory(categoryTitle, material) {
+export async function fetchPiecesByCategory(
+  categoryTitle,
+  material,
+  featured = false,
+) {
+  if (featured) {
+    // Try lowercase 'featured' first with uppercase 'Photo' (matching piece.Photo)
+    let res = await fetch(
+      `${STRAPI_URL}/api/pieces?filters[featured][$eq]=true&populate=Photo`,
+    );
+
+    // If Strapi rejects lowercase 'featured' (e.g. field is named 'Featured'), try uppercase 'Featured'
+    if (!res.ok) {
+      res = await fetch(
+        `${STRAPI_URL}/api/pieces?filters[Featured][$eq]=true&populate=Photo`,
+      );
+    }
+
+    if (!res.ok) throw new Error("Failed to load featured items");
+    const data = await res.json();
+    return data.data || [];
+  }
+
   let url = `${STRAPI_URL}/api/pieces?populate=*&filters[category][Name][$eq]=${encodeURIComponent(categoryTitle)}`;
   if (material) {
     url += `&filters[material][Name][$eq]=${encodeURIComponent(material)}`;
   }
+
   const res = await fetch(url);
   if (!res.ok) throw new Error("Failed to load items");
   const data = await res.json();

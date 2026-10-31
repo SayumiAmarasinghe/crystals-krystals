@@ -1,13 +1,19 @@
 import React from 'react';
-import Navbar from '../components/Navbar';
-import Footer from '../components/Footer';
+//import Navbar from '../components/Navbar';
+//import Footer from '../components/Footer';
 //import './About.css';
-const Home = () => {
+import ItemGrid from "../components/ItemGrid.jsx";
+import './ShopPages.css';
+export default function Home() {
   return (
-    <div className="home-page">
-      Home Page
+    <div className="shop-container">
+      <main className="page-container">
+      {/* Set photosOnly={true} if you only want the images without text */}
+      <ItemGrid
+        featured={true}
+        layout = "grid"
+      />
+    </main>
     </div>
   );
-};
-
-export default Home;
+}

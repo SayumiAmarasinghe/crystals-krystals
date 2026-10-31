@@ -11,35 +11,39 @@ import "./ItemGrid.css";
 export default function ItemGrid({
   categoryTitle,
   material,
+  featured = false,
+  photosOnly = false,
   layout = "carousel",
 }) {
   const { items, loading, error } = usePiecesByCategory(
     categoryTitle,
     material,
+    featured,
   );
-  const heading = material ? `${material} ${categoryTitle}` : categoryTitle;
+
+  const heading = featured
+    ? categoryTitle || "Featured Items"
+    : material
+      ? `${material} ${categoryTitle}`
+      : categoryTitle;
+
   const railRef = useRef(null);
-  
+
   const [showAll, setShowAll] = useState(false);
   const [canScroll, setCanScroll] = useState(false);
-  
+
   const isCarousel = layout === "carousel";
   const showGrid = !isCarousel || showAll;
 
-  // Checks if the grid's total scrolling width is larger than its visible width
   useEffect(() => {
     const checkScrollability = () => {
       const rail = railRef.current;
       if (rail) {
-        // scrollWidth is total content size, clientWidth is visible size
         setCanScroll(rail.scrollWidth > rail.clientWidth);
       }
     };
 
-    // Check when component mounts or when items/layout changes
     checkScrollability();
-
-    // Re-check if the user resizes their browser window
     window.addEventListener("resize", checkScrollability);
     return () => window.removeEventListener("resize", checkScrollability);
   }, [items, showGrid]);
@@ -56,7 +60,6 @@ export default function ItemGrid({
     let currentIndex = Math.round(rail.scrollLeft / itemStep);
     let nextIndex = currentIndex + direction;
 
-    // Prevents scrolling past the beginning or end
     nextIndex = Math.max(0, Math.min(nextIndex, items.length - 1));
 
     rail.scrollTo({
@@ -118,24 +121,25 @@ export default function ItemGrid({
                       )}
                     </div>
 
-                    <div className="product-info">
-                      <h3>{name}</h3>
-                      <p className="product-description">
-                        {getPlainText(description)}
-                      </p>
-                    </div>
+                    {!photosOnly && (
+                      <div className="product-info">
+                        <h3>{name}</h3>
+                        <p className="product-description">
+                          {getPlainText(description)}
+                        </p>
+                      </div>
+                    )}
                   </div>
                 );
               })}
             </div>
-            
-            {/* Arrows only render if it's a carousel, not showing all, AND overflowing */}
+
             {isCarousel && !showAll && canScroll && (
               <div className="carousel-controls">
                 <button
                   type="button"
                   className="carousel-arrow"
-                  aria-label={`Show previous ${heading.toLowerCase()} items`}
+                  aria-label={`Show previous ${(heading || "featured").toLowerCase()} items`}
                   onClick={() => scrollItems(-1)}
                 >
                   <span
@@ -146,7 +150,7 @@ export default function ItemGrid({
                 <button
                   type="button"
                   className="carousel-arrow"
-                  aria-label={`Show next ${heading.toLowerCase()} items`}
+                  aria-label={`Show next ${(heading || "featured").toLowerCase()} items`}
                   onClick={() => scrollItems(1)}
                 >
                   <span
