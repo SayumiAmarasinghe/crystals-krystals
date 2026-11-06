@@ -27,6 +27,9 @@
     "Description": {
       "type": "blocks",
       "required": true
+    },
+    "Date": {
+      "type": "datetime"
     }
   }
 }

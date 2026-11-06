@@ -300,3 +300,42 @@ export function getPiecePhotoUrl(piece) {
 export function getPieceDocumentId(piece) {
   return piece.documentId;
 }
+//fetches all events from strapi backend 
+
+export async function fetchEvents() {
+  const res = await fetch(`${STRAPI_URL}/api/events?populate=*`);
+  if (!res.ok) throw new Error("Failed to load events");
+  const data = await res.json();
+  return data.data || [];
+}
+
+//reads display name off single event item 
+export function getEventName(event) {
+  return event.Name || event.attributes?.Name;
+}
+
+export function getEventDescription(event) {
+  return event.Description || event.attributes?.Description;
+}
+
+export function getEventDate(event) {
+  return event.Date || event.attributes?.Date;
+}
+
+export function getEventPhotoUrl(event) {
+  const photos = event.Photo || event.attributes?.Photo?.data || [];
+  const firstPhoto = Array.isArray(photos) ? photos[0] : photos;
+  const path =
+    firstPhoto?.formats?.large?.url || // resized version, fits in 1000px
+    firstPhoto?.url || // original (only reached if it's ≤1000px)
+    firstPhoto?.attributes?.url; // original, old Strapi v4 shape
+
+  if (!path) return null;
+  // Cloudinary returns full URLs; the local provider returns relative paths
+  return path.startsWith("http") ? path : `${STRAPI_URL}${path}`;
+}
+
+
+
+
+
