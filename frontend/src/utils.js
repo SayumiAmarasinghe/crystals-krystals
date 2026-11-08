@@ -335,7 +335,33 @@ export function getEventPhotoUrl(event) {
   return path.startsWith("http") ? path : `${STRAPI_URL}${path}`;
 }
 
+export async function fetchTestimonials() {
+  const res = await fetch(`${STRAPI_URL}/api/testimonies?populate=*`);
+  if (!res.ok) throw new Error("Failed to load testimonials");
+  const data = await res.json();
+  return data.data || [];
+}
 
+export function getTestimonialName(testimonial) {
+  return testimonial.Name || testimonial.attributes?.Name;
+}
+
+export function getTestimonialReview(testimonial) {
+  return testimonial.Review || testimonial.attributes?.Review;
+}
+
+export function getTestimonialPhotoUrl(testimonial) {
+  const photos = testimonial.Photo || testimonial.attributes?.Photo?.data || [];
+  const firstPhoto = Array.isArray(photos) ? photos[0] : photos;
+  const path =
+    firstPhoto?.formats?.large?.url || // resized version, fits in 1000px
+    firstPhoto?.url || // original (only reached if it's ≤1000px)
+    firstPhoto?.attributes?.url; // original, old Strapi v4 shape
+
+  if (!path) return null;
+  // Cloudinary returns full URLs; the local provider returns relative paths
+  return path.startsWith("http") ? path : `${STRAPI_URL}${path}`;
+}
 
 
 

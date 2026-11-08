@@ -3,6 +3,7 @@ import React from 'react';
 //import Footer from '../components/Footer';
 //import './About.css';
 import ItemGrid from "../components/ItemGrid.jsx";
+import TestimonialGrid from "../components/TestimonialGrid.jsx";
 import './ShopPages.css';
 export default function Home() {
   return (
@@ -13,6 +14,7 @@ export default function Home() {
         featured={true}
         layout = "grid"
       />
+      <TestimonialGrid />
     </main>
     </div>
   );
