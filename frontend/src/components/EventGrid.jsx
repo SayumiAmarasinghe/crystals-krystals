@@ -16,9 +16,6 @@ export default function EventGrid() {
   useEffect(() => {
     fetchEvents()
       .then(data => {
-        console.log("Full Event Object:", data[0]);
-  console.log("Event Name:", getEventName(data[0]));
-  console.log("Event Date:", getEventDate(data[0]));
         const today = new Date();
         today.setHours(0, 0, 0, 0); // Normalize today to midnight
 
@@ -27,7 +24,13 @@ export default function EventGrid() {
 
         data.forEach(event => {
           const rawDate = getEventDate(event);
-          if (!rawDate) return;
+          
+          // Defensive fallback: If an event has no date, don't drop it. 
+          // Push it to upcoming by default so it stays visible as TBA.
+          if (!rawDate) {
+            upcoming.push(event);
+            return;
+          }
 
           const eventDate = new Date(rawDate);
           if (eventDate >= today) {
@@ -37,11 +40,23 @@ export default function EventGrid() {
           }
         });
 
-        // Sort upcoming events soonest first (ascending)
-        upcoming.sort((a, b) => new Date(getEventDate(a)) - new Date(getEventDate(b)));
+        // Sort upcoming events soonest first (ascending), handling missing dates safely
+        upcoming.sort((a, b) => {
+          const dateA = getEventDate(a);
+          const dateB = getEventDate(b);
+          if (!dateA) return 1;  // Push TBA items to the bottom of upcoming
+          if (!dateB) return -1;
+          return new Date(dateA) - new Date(dateB);
+        });
 
-        // Sort past events most recent first (descending)
-        past.sort((a, b) => new Date(getEventDate(b)) - new Date(getEventDate(a)));
+        // Sort past events most recent first (descending), handling missing dates safely
+        past.sort((a, b) => {
+          const dateA = getEventDate(a);
+          const dateB = getEventDate(b);
+          if (!dateA) return 1;
+          if (!dateB) return -1;
+          return new Date(dateB) - new Date(dateA);
+        });
 
         setUpcomingEvents(upcoming);
         setPastEvents(past);
@@ -67,6 +82,7 @@ export default function EventGrid() {
             const descriptionText = getPlainText(getEventDescription(event));
             const rawDate = getEventDate(event);
 
+            // Fallback to 'Date TBA' if the date is missing
             const formattedDate = rawDate 
               ? new Date(rawDate).toLocaleDateString('en-US', {
                   timeZone: 'UTC',
@@ -74,7 +90,7 @@ export default function EventGrid() {
                   day: '2-digit',
                   year: 'numeric'
                 })
-              : '';
+              : 'Date TBA';
 
             return (
               <div key={event.id || event.documentId} className="event-card">
@@ -105,7 +121,7 @@ export default function EventGrid() {
                   day: '2-digit',
                   year: 'numeric'
                 })
-              : '';
+              : 'Date TBA';
 
             return (
               <div key={event.id || event.documentId} className="event-card past-card">

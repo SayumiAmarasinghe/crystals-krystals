@@ -29,7 +29,8 @@
       "required": true
     },
     "Date": {
-      "type": "datetime"
+      "type": "datetime",
+      "required": true
     }
   }
 }
