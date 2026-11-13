@@ -16,23 +16,27 @@
   width: 100%;
 }
 
+/* Viewport: hides the cards waiting off-screen */
 .testimonials-grid {
-  display: flex;
-  gap: 16px;
-  overflow-x: auto;
-  scroll-snap-type: x mandatory;
+  overflow: hidden;
   padding: 4px 0 12px;
-  scrollbar-width: none;
 }
 
-.testimonials-grid::-webkit-scrollbar {
-  display: none;
+/* Track: slides left/right one card at a time */
+.testimonials-track {
+  display: flex;
+  gap: 16px;
+  /* one step = one card width + the gap (4 cards across) */
+  transform: translateX(calc(var(--u, 1) * -1 * ((100% - 48px) / 4 + 16px)));
+}
+
+.testimonials-track.is-animating {
+  transition: transform 0.4s ease;
 }
 
 .testimonial-card {
-  flex: 0 0 calc((100% - 48px) / 4);   /* 4 cards across */
+  flex: 0 0 calc((100% - 48px) / 4);
   min-height: 340px;
-  scroll-snap-align: start;
   display: flex;
   flex-direction: column;
   box-sizing: border-box;
@@ -42,11 +46,6 @@
   border-radius: 12px;
   text-align: left;
 }
-
-/* Center the cards when there are fewer than fit in the row.
-   With more cards, they still scroll normally from the left. */
-.testimonial-card:first-child { margin-left: auto; }
-.testimonial-card:last-child  { margin-right: auto; }
 
 .testimonial-photo {
   width: 100%;
@@ -96,10 +95,18 @@
 .testimonial-arrow-left  { left: -14px; }
 .testimonial-arrow-right { right: -14px; }
 
+/* 2 cards across on tablets */
 @media (max-width: 900px) {
+  .testimonials-track {
+    transform: translateX(calc(var(--u, 1) * -1 * ((100% - 16px) / 2 + 16px)));
+  }
   .testimonial-card { flex-basis: calc((100% - 16px) / 2); }
 }
 
+/* 1 card across on phones */
 @media (max-width: 560px) {
+  .testimonials-track {
+    transform: translateX(calc(var(--u, 1) * -1 * (85% + 16px)));
+  }
   .testimonial-card { flex-basis: 85%; }
 }

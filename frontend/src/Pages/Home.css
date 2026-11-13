@@ -27,7 +27,7 @@
 }
 
 .home-hero-content {
-  margin-left: 8%;
+  margin-left: 50px;
   padding: 0;
   background: none;
   border-radius: 0;
@@ -74,9 +74,9 @@
 
 /* ---------- Page column ---------- */
 .shop-container.home-page .page-container {
-  max-width: 1000px;
+  max-width: none;
   margin: 0 auto;
-  padding: 0 8%;
+  padding: 0 50px;      
   box-sizing: border-box;
 }
 
@@ -112,3 +112,4 @@
 .shop-container.home-page .item-grid-toolbar {
   display: none;
 }
+

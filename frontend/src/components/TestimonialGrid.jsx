@@ -8,10 +8,15 @@ import {
 } from '../utils.js';
 import './TestimonialGrid.css';
 
+const SLOTS = 7; // 1 hidden on the left + up to 4 visible + extras on the right
+
 export default function TestimonialGrid() {
   const [testimonials, setTestimonials] = useState([]);
   const [loading, setLoading] = useState(true);
-  const scrollRef = useRef(null);
+
+  const [start, setStart] = useState(0);       // which testimonial is first in view
+  const [units, setUnits] = useState(1);       // 1 = resting, 2 = sliding next, 0 = sliding prev
+  const [animating, setAnimating] = useState(false);
 
   useEffect(() => {
     fetchTestimonials()
@@ -25,12 +30,29 @@ export default function TestimonialGrid() {
       });
   }, []);
 
-  const scroll = (dir) => {
-    scrollRef.current?.scrollBy({ left: dir * 280, behavior: 'smooth' });
+  const n = testimonials.length;
+
+  const slide = (dir) => {
+    if (animating) return;
+    setAnimating(true);
+    setUnits(dir > 0 ? 2 : 0);
+  };
+
+  // After the slide finishes, rotate the list and snap back to rest (no animation)
+  const handleTransitionEnd = (e) => {
+    if (e.target !== e.currentTarget || !animating) return;
+    if (units === 2) setStart((s) => (s + 1) % n);
+    if (units === 0) setStart((s) => (s - 1 + n) % n);
+    setAnimating(false);
+    setUnits(1);
   };
 
   if (loading) return <div>Loading testimonials...</div>;
-  if (testimonials.length === 0) return null;
+  if (n === 0) return null;
+
+  const slots = Array.from({ length: SLOTS }, (_, i) => {
+    return testimonials[(((start + i - 1) % n) + n) % n];
+  });
 
   return (
     <section className="testimonials-section">
@@ -39,37 +61,40 @@ export default function TestimonialGrid() {
         <button
           type="button"
           className="testimonial-arrow testimonial-arrow-left"
-          onClick={() => scroll(-1)}
+          onClick={() => slide(-1)}
           aria-label="Previous testimonials"
         >
           ‹
         </button>
 
-        <div className="testimonials-grid" ref={scrollRef}>
-          {testimonials.map((testimonial) => {
-            const name = getTestimonialName(testimonial);
-            const photoUrl = getTestimonialPhotoUrl(testimonial);
-            const reviewText = getPlainText(getTestimonialReview(testimonial));
+        <div className="testimonials-grid">
+          <div
+            className={`testimonials-track${animating ? ' is-animating' : ''}`}
+            style={{ '--u': units }}
+            onTransitionEnd={handleTransitionEnd}
+          >
+            {slots.map((testimonial, i) => {
+              const name = getTestimonialName(testimonial);
+              const photoUrl = getTestimonialPhotoUrl(testimonial);
+              const reviewText = getPlainText(getTestimonialReview(testimonial));
 
-            return (
-              <div
-                key={testimonial.id || testimonial.documentId}
-                className="testimonial-card"
-              >
-                {photoUrl && (
-                  <img src={photoUrl} alt={name} className="testimonial-photo" />
-                )}
-                <p className="testimonial-review">"{reviewText}"</p>
-                <h4 className="testimonial-name">— {name}</h4>
-              </div>
-            );
-          })}
+              return (
+                <div key={i} className="testimonial-card">
+                  {photoUrl && (
+                    <img src={photoUrl} alt={name} className="testimonial-photo" />
+                  )}
+                  <p className="testimonial-review">"{reviewText}"</p>
+                  <h4 className="testimonial-name">— {name}</h4>
+                </div>
+              );
+            })}
+          </div>
         </div>
 
         <button
           type="button"
           className="testimonial-arrow testimonial-arrow-right"
-          onClick={() => scroll(1)}
+          onClick={() => slide(1)}
           aria-label="Next testimonials"
         >
           ›
@@ -77,4 +102,4 @@ export default function TestimonialGrid() {
       </div>
     </section>
   );
-}
+} 
