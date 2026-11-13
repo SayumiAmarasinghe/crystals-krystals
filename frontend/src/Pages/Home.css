@@ -1,0 +1,72 @@
+:root {
+  --pink-primary: #FFBCD1;
+  --pink-hot: #FF77AC;
+  --cream: #F6E9E2;
+  --berry: #AE4667;
+  --plum: #471B27;
+  --accent-red: #B33434;
+  --blush: #F1D5DB;
+  --gray-light: #D6D6D6;
+  --gray-mid: #AFAFAF;
+}
+
+.home-hero {
+  position: relative;
+  height: 320px;
+  background-size: cover;
+  background-position: center;
+  display: flex;
+  align-items: center;
+}
+
+.home-hero-content {
+  padding-left: 8%;
+  color: var(--plum);
+}
+
+.home-hero-content h2 {
+  margin: 0 0 12px;
+  font-size: 1.4rem;
+  font-weight: 700;
+}
+
+/* Main button */
+.btn-main {
+  display: inline-block;
+  padding: 10px 28px;
+  background: var(--pink-primary);
+  color: var(--plum);
+  border: 2px solid transparent;
+  border-radius: 999px;
+  font-weight: 700;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s;
+}
+
+.btn-main:hover {
+  background: var(--berry);
+  color: #fff;
+}
+
+.btn-main:active {
+  background: var(--pink-primary);
+  color: var(--plum);
+  border-color: var(--plum);
+}
+
+.home-section {
+  margin: 56px 0;
+}
+
+.home-section-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--plum);
+  margin-bottom: 20px;
+}
+
+.home-brand-story {
+  line-height: 1.6;
+  color: var(--plum);
+}
