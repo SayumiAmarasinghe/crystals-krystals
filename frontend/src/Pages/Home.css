@@ -1,0 +1,115 @@
+:root {
+  --pink-primary: #FFBCD1;
+  --pink-hot: #FF77AC;
+  --cream: #F6E9E2;
+  --berry: #AE4667;
+  --plum: #471B27;
+  --accent-red: #B33434;
+  --blush: #F1D5DB;
+  --gray-light: #D6D6D6;
+  --gray-mid: #AFAFAF;
+}
+
+/* Remove side padding so the hero can touch the edges */
+.shop-container.home-page {
+  padding: 0;
+}
+
+/* ---------- Hero banner (matches Figma) ---------- */
+.home-hero {
+  width: 100%;
+  aspect-ratio: 437 / 185;
+  min-height: 220px;
+  background-size: cover;
+  background-position: center;
+  display: flex;
+  align-items: center;
+}
+
+.home-hero-content {
+  margin-left: 50px;
+  padding: 0;
+  background: none;
+  border-radius: 0;
+  color: #1a1a1a;
+  text-shadow: 0 0 8px rgba(255, 255, 255, 0.8);
+}
+
+.home-hero-content h2 {
+  margin: 0 0 10px;
+  font-size: 1.4rem;
+  font-weight: 700;
+}
+
+.home-hero .btn-main {
+  padding: 6px 18px;
+  font-size: 0.8rem;
+  text-shadow: none;
+}
+
+/* ---------- Main button (from Figma) ---------- */
+.btn-main {
+  display: inline-block;
+  padding: 10px 28px;
+  background: var(--pink-primary);
+  color: var(--plum);
+  border: 2px solid transparent;
+  border-radius: 999px;
+  font-weight: 700;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s;
+}
+
+.btn-main:hover {
+  background: var(--berry);
+  color: #fff;
+}
+
+.btn-main:active {
+  background: var(--pink-primary);
+  color: var(--plum);
+  border-color: var(--plum);
+}
+
+/* ---------- Page column ---------- */
+.shop-container.home-page .page-container {
+  max-width: none;
+  margin: 0 auto;
+  padding: 0 50px;      
+  box-sizing: border-box;
+}
+
+.home-section {
+  margin: 56px 0;
+}
+
+.home-section-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--plum);
+  margin: 0 0 20px;
+}
+
+.home-brand-story {
+  line-height: 1.6;
+  color: var(--plum);
+}
+
+/* ---------- Force left alignment (beats other center rules) ---------- */
+.shop-container.home-page,
+.shop-container.home-page .page-container,
+.shop-container.home-page h1,
+.shop-container.home-page h2,
+.shop-container.home-page h3,
+.shop-container.home-page p,
+.shop-container.home-page .home-hero-content,
+.shop-container.home-page .category-section h2 {
+  text-align: left;
+}
+
+/* Figma has no "Show all" toggle on the home page */
+.shop-container.home-page .item-grid-toolbar {
+  display: none;
+}
+
