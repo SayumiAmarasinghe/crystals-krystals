@@ -1,15 +1,16 @@
 import React from 'react';
 import ItemGrid from "../components/ItemGrid.jsx";
 import TestimonialGrid from "../components/TestimonialGrid.jsx";
+import heroImg from "../assets/seasonal-hero.jpg";
 import './ShopPages.css';
 import './Home.css';
 
 export default function Home() {
   return (
-    <div className="shop-container">
+    <div className="shop-container home-page">
       <section
         className="home-hero"
-        style={{ backgroundImage: "url('/images/seasonal-hero.jpg')" }}
+        style={{ backgroundImage: `url(${heroImg})` }}
       >
         <div className="home-hero-content">
           <h2>Seasonal Items</h2>
@@ -19,8 +20,7 @@ export default function Home() {
 
       <main className="page-container">
         <section className="home-section">
-          <h2 className="home-section-title">Featured Items</h2>
-          <ItemGrid featured={true} layout="grid" />
+          <ItemGrid featured={true} />
         </section>
 
         <section className="home-section">
@@ -31,7 +31,6 @@ export default function Home() {
         </section>
 
         <section className="home-section">
-          <h2 className="home-section-title">Testimonials</h2>
           <TestimonialGrid />
         </section>
       </main>

@@ -1,0 +1,105 @@
+.testimonials-section {
+  margin: 56px 0;
+  text-align: left;
+}
+
+.testimonials-section h2 {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--plum, #471B27);
+  margin: 0 0 20px;
+  text-align: left;
+}
+
+.testimonials-carousel {
+  position: relative;
+  width: 100%;
+}
+
+.testimonials-grid {
+  display: flex;
+  gap: 16px;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  padding: 4px 0 12px;
+  scrollbar-width: none;
+}
+
+.testimonials-grid::-webkit-scrollbar {
+  display: none;
+}
+
+.testimonial-card {
+  flex: 0 0 calc((100% - 48px) / 4);   /* 4 cards across */
+  min-height: 340px;
+  scroll-snap-align: start;
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+  padding: 14px;
+  background: #fff;
+  border: 1.5px solid var(--plum, #471B27);
+  border-radius: 12px;
+  text-align: left;
+}
+
+/* Center the cards when there are fewer than fit in the row.
+   With more cards, they still scroll normally from the left. */
+.testimonial-card:first-child { margin-left: auto; }
+.testimonial-card:last-child  { margin-right: auto; }
+
+.testimonial-photo {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+.testimonial-review {
+  flex: 1;
+  margin: 12px 0 10px;
+  font-size: 0.8rem;
+  line-height: 1.4;
+  color: var(--plum, #471B27);
+  text-align: left;
+}
+
+.testimonial-name {
+  margin: 0;
+  font-size: 0.8rem;
+  color: var(--plum, #471B27);
+  text-align: left;
+}
+
+.testimonial-arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 2;
+  width: 36px;
+  height: 36px;
+  border: none;
+  border-radius: 50%;
+  background: var(--pink-primary, #FFBCD1);
+  color: var(--plum, #471B27);
+  font-size: 1.4rem;
+  line-height: 1;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s;
+}
+
+.testimonial-arrow:hover {
+  background: var(--berry, #AE4667);
+  color: #fff;
+}
+
+.testimonial-arrow-left  { left: -14px; }
+.testimonial-arrow-right { right: -14px; }
+
+@media (max-width: 900px) {
+  .testimonial-card { flex-basis: calc((100% - 16px) / 2); }
+}
+
+@media (max-width: 560px) {
+  .testimonial-card { flex-basis: 85%; }
+}

@@ -10,9 +10,16 @@
   --gray-mid: #AFAFAF;
 }
 
+/* Remove side padding so the hero can touch the edges */
+.shop-container.home-page {
+  padding: 0;
+}
+
+/* ---------- Hero banner (matches Figma) ---------- */
 .home-hero {
-  position: relative;
-  height: 320px;
+  width: 100%;
+  aspect-ratio: 437 / 185;
+  min-height: 220px;
   background-size: cover;
   background-position: center;
   display: flex;
@@ -20,17 +27,27 @@
 }
 
 .home-hero-content {
-  padding-left: 8%;
-  color: var(--plum);
+  margin-left: 8%;
+  padding: 0;
+  background: none;
+  border-radius: 0;
+  color: #1a1a1a;
+  text-shadow: 0 0 8px rgba(255, 255, 255, 0.8);
 }
 
 .home-hero-content h2 {
-  margin: 0 0 12px;
+  margin: 0 0 10px;
   font-size: 1.4rem;
   font-weight: 700;
 }
 
-/* Main button */
+.home-hero .btn-main {
+  padding: 6px 18px;
+  font-size: 0.8rem;
+  text-shadow: none;
+}
+
+/* ---------- Main button (from Figma) ---------- */
 .btn-main {
   display: inline-block;
   padding: 10px 28px;
@@ -55,6 +72,14 @@
   border-color: var(--plum);
 }
 
+/* ---------- Page column ---------- */
+.shop-container.home-page .page-container {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 0 8%;
+  box-sizing: border-box;
+}
+
 .home-section {
   margin: 56px 0;
 }
@@ -63,10 +88,27 @@
   font-size: 1.5rem;
   font-weight: 700;
   color: var(--plum);
-  margin-bottom: 20px;
+  margin: 0 0 20px;
 }
 
 .home-brand-story {
   line-height: 1.6;
   color: var(--plum);
+}
+
+/* ---------- Force left alignment (beats other center rules) ---------- */
+.shop-container.home-page,
+.shop-container.home-page .page-container,
+.shop-container.home-page h1,
+.shop-container.home-page h2,
+.shop-container.home-page h3,
+.shop-container.home-page p,
+.shop-container.home-page .home-hero-content,
+.shop-container.home-page .category-section h2 {
+  text-align: left;
+}
+
+/* Figma has no "Show all" toggle on the home page */
+.shop-container.home-page .item-grid-toolbar {
+  display: none;
 }
