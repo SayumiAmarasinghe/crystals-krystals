@@ -1,7 +1,8 @@
+
 /**
  * usePiecesByCategory.js
  *
- * Custom hook that fetches all pieces in a single category by name,
+ * Custom hook that fetches pieces by category, material, or featured status,
  * using Strapi's server-side filter (via fetchPiecesByCategory) rather
  * than downloading everything and filtering in JS. Handles loading and
  * error state so you don't have to write that logic in every component
@@ -14,29 +15,28 @@
  * Usage:
  *   import { usePiecesByCategory } from '../hooks/usePiecesByCategory.js';
  *
- *   function MyComponent({ categoryTitle }) {
- *     const { items, loading, error } = usePiecesByCategory(categoryTitle);
+ *   // By category:
+ *   const { items, loading, error } = usePiecesByCategory("Earrings", "Gold");
  *
- *     if (loading) return <p>Loading...</p>;
- *     if (error) return <p>{error}</p>;
+ *   // Featured pieces for the home page:
+ *   const { items, loading, error } = usePiecesByCategory(null, null, true);
  *
- *     return items.map(item => ...);
- *   }
- *
- * @param {string} categoryTitle - category name to filter by, e.g. "Earrings"
+ * @param {string|null} categoryTitle - category name to filter by, e.g. "Earrings"
+ * @param {string|null} [material] - optional material filter
+ * @param {boolean} [featured=false] - when true, fetches only featured pieces
  * @returns {{ items: Array, loading: boolean, error: string|null }}
  */
 import { useState, useEffect } from "react";
 import { fetchPiecesByCategory } from "../utils.js";
 
-export function usePiecesByCategory(categoryTitle, material) {
+export function usePiecesByCategory(categoryTitle, material, featured = false) {
   const [items, setItems] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
   useEffect(() => {
     // Guards against setting state after this effect has been cleaned up
-    // (e.g. if categoryTitle changes again before the fetch finishes).
+    // (e.g. if categoryTitle or featured changes again before the fetch finishes).
     let cancelled = false;
 
     async function loadPieces() {
@@ -44,7 +44,11 @@ export function usePiecesByCategory(categoryTitle, material) {
         setLoading(true);
         setError(null);
 
-        const pieces = await fetchPiecesByCategory(categoryTitle, material);
+        const pieces = await fetchPiecesByCategory(
+          categoryTitle,
+          material,
+          featured,
+        );
 
         if (!cancelled) setItems(pieces);
       } catch (err) {
@@ -58,7 +62,7 @@ export function usePiecesByCategory(categoryTitle, material) {
     return () => {
       cancelled = true;
     };
-  }, [categoryTitle, material]);
+  }, [categoryTitle, material, featured]);
 
   return { items, loading, error };
 }

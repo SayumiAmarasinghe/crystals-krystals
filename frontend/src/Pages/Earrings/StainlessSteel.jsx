@@ -1,5 +1,6 @@
-import ItemGrid from '../../components/ItemGrid';
-import '../ShopPages.css';
+import React from "react";
+import ItemGrid from "../../components/ItemGrid.jsx";
+import "../ShopPages.css";
 
 export default function StainlessSteelEarrings() {
   return (

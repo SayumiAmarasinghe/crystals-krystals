@@ -8,6 +8,7 @@ import Home from "./Pages/Home";
 import Shop from "./Pages/Shop";
 import About from "./Pages/About";
 import Contact from "./Pages/Contact";
+import Events from "./Pages/Events";
 import CustomOrder from "./Pages/CustomOrder";
 import Earrings from "./Pages/Earrings/Earrings";
 import Necklace from "./Pages/Necklace";
@@ -38,6 +39,7 @@ function App() {
           <Route path="/shop" element={<Shop />} />
           <Route path="/about" element={<About />} />
           <Route path="/contact" element={<Contact />} />
+          <Route path="/events" element={<Events />} />
           <Route path="/custom-order" element={<CustomOrder />} />
           <Route path="/shop/earrings" element={<Earrings />} />
           <Route path="/shop/earrings/goldfilled" element={<GoldFilledEarrings />} />
