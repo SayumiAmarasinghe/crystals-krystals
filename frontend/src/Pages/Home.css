@@ -10,9 +10,14 @@
   --gray-mid: #AFAFAF;
 }
 
+
 /* Remove side padding so the hero can touch the edges */
 .shop-container.home-page {
   padding: 0;
+  background-color: #ffffff;
+  color: #000000;
+  padding: 35px 85px 70px;
+  font-family: 'Podkova', serif;
 }
 
 /* ---------- Hero banner (matches Figma) ---------- */

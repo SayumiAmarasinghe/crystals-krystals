@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 import {
   fetchTestimonials,
   getTestimonialName,
@@ -8,14 +8,15 @@ import {
 } from '../utils.js';
 import './TestimonialGrid.css';
 
-const SLOTS = 7; // 1 hidden on the left + up to 4 visible + extras on the right
+const SLOTS = 7;
+const CAROUSEL_THRESHOLD = 4;
 
 export default function TestimonialGrid() {
   const [testimonials, setTestimonials] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  const [start, setStart] = useState(0);       // which testimonial is first in view
-  const [units, setUnits] = useState(1);       // 1 = resting, 2 = sliding next, 0 = sliding prev
+  const [start, setStart] = useState(0);
+  const [units, setUnits] = useState(1);
   const [animating, setAnimating] = useState(false);
 
   useEffect(() => {
@@ -33,12 +34,11 @@ export default function TestimonialGrid() {
   const n = testimonials.length;
 
   const slide = (dir) => {
-    if (animating) return;
+    if (animating || n <= CAROUSEL_THRESHOLD) return;
     setAnimating(true);
     setUnits(dir > 0 ? 2 : 0);
   };
 
-  // After the slide finishes, rotate the list and snap back to rest (no animation)
   const handleTransitionEnd = (e) => {
     if (e.target !== e.currentTarget || !animating) return;
     if (units === 2) setStart((s) => (s + 1) % n);
@@ -50,36 +50,48 @@ export default function TestimonialGrid() {
   if (loading) return <div>Loading testimonials...</div>;
   if (n === 0) return null;
 
-  const slots = Array.from({ length: SLOTS }, (_, i) => {
-    return testimonials[(((start + i - 1) % n) + n) % n];
-  });
+  const isCarousel = n > CAROUSEL_THRESHOLD;
+
+  // Generate slots for carousel, or exact items for static view
+  const itemsToRender = isCarousel
+    ? Array.from({ length: SLOTS }, (_, i) => {
+        const dataIndex = (((start + i - 1) % n) + n) % n;
+        return {
+          item: testimonials[dataIndex],
+          uniqueKey: `${dataIndex}-${i}`
+        };
+      })
+    : testimonials.map((item, i) => ({ item, uniqueKey: `${i}` }));
 
   return (
     <section className="testimonials-section">
       <h2>Testimonials</h2>
-      <div className="testimonials-carousel">
-        <button
-          type="button"
-          className="testimonial-arrow testimonial-arrow-left"
-          onClick={() => slide(-1)}
-          aria-label="Previous testimonials"
-        >
-          ‹
-        </button>
+      <div className={`testimonials-carousel ${!isCarousel ? 'is-static' : ''}`}>
+        
+        {isCarousel && (
+          <button
+            type="button"
+            className="testimonial-arrow testimonial-arrow-left"
+            onClick={() => slide(-1)}
+            aria-label="Previous testimonials"
+          >
+            ‹
+          </button>
+        )}
 
         <div className="testimonials-grid">
           <div
-            className={`testimonials-track${animating ? ' is-animating' : ''}`}
-            style={{ '--u': units }}
+            className={`testimonials-track${animating ? ' is-animating' : ''} ${!isCarousel ? 'static-track' : ''}`}
+            style={isCarousel ? { '--u': units } : undefined}
             onTransitionEnd={handleTransitionEnd}
           >
-            {slots.map((testimonial, i) => {
-              const name = getTestimonialName(testimonial);
-              const photoUrl = getTestimonialPhotoUrl(testimonial);
-              const reviewText = getPlainText(getTestimonialReview(testimonial));
+            {itemsToRender.map(({ item, uniqueKey }) => {
+              const name = getTestimonialName(item);
+              const photoUrl = getTestimonialPhotoUrl(item);
+              const reviewText = getPlainText(getTestimonialReview(item));
 
               return (
-                <div key={i} className="testimonial-card">
+                <div key={uniqueKey} className="testimonial-card">
                   {photoUrl && (
                     <img src={photoUrl} alt={name} className="testimonial-photo" />
                   )}
@@ -91,15 +103,17 @@ export default function TestimonialGrid() {
           </div>
         </div>
 
-        <button
-          type="button"
-          className="testimonial-arrow testimonial-arrow-right"
-          onClick={() => slide(1)}
-          aria-label="Next testimonials"
-        >
-          ›
-        </button>
+        {isCarousel && (
+          <button
+            type="button"
+            className="testimonial-arrow testimonial-arrow-right"
+            onClick={() => slide(1)}
+            aria-label="Next testimonials"
+          >
+            ›
+          </button>
+        )}
       </div>
     </section>
   );
-} 
+}

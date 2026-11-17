@@ -16,8 +16,12 @@ export default function EventGrid() {
   useEffect(() => {
     fetchEvents()
       .then(data => {
-        const today = new Date();
-        today.setHours(0, 0, 0, 0); // Normalize today to midnight
+        // Get today's date formatted as YYYY-MM-DD in local time to avoid timezone offset bugs
+        const now = new Date();
+        const year = now.getFullYear();
+        const month = String(now.getMonth() + 1).padStart(2, '0');
+        const day = String(now.getDate()).padStart(2, '0');
+        const todayString = `${year}-${month}-${day}`;
 
         const upcoming = [];
         const past = [];
@@ -25,37 +29,47 @@ export default function EventGrid() {
         data.forEach(event => {
           const rawDate = getEventDate(event);
           
-          // Defensive fallback: If an event has no date, don't drop it. 
-          // Push it to upcoming by default so it stays visible as TBA.
+          // Defensive fallback: If an event has no date, push it to upcoming as TBA
           if (!rawDate) {
             upcoming.push(event);
             return;
           }
 
-          const eventDate = new Date(rawDate);
-          if (eventDate >= today) {
+          // Safely extract the YYYY-MM-DD portion of the date string to prevent timezone shifts
+          // (Handles both full ISO strings "2026-06-05T00:00:00.000Z" and "2026-06-05")
+          const cleanDateString = String(rawDate).split('T')[0];
+          const parsedCheck = new Date(cleanDateString);
+
+          if (isNaN(parsedCheck.getTime())) {
+            // If the date string is malformed, treat it safely as TBA
+            upcoming.push(event);
+            return;
+          }
+
+          // String comparison (YYYY-MM-DD) is immune to browser timezone bugs
+          if (cleanDateString >= todayString) {
             upcoming.push(event);
           } else {
             past.push(event);
           }
         });
 
-        // Sort upcoming events soonest first (ascending), handling missing dates safely
+        // Sort upcoming events soonest first, pushing TBA to the bottom
         upcoming.sort((a, b) => {
           const dateA = getEventDate(a);
           const dateB = getEventDate(b);
-          if (!dateA) return 1;  // Push TBA items to the bottom of upcoming
+          if (!dateA) return 1; 
           if (!dateB) return -1;
-          return new Date(dateA) - new Date(dateB);
+          return new Date(String(dateA).split('T')[0]) - new Date(String(dateB).split('T')[0]);
         });
 
-        // Sort past events most recent first (descending), handling missing dates safely
+        // Sort past events most recent first
         past.sort((a, b) => {
           const dateA = getEventDate(a);
           const dateB = getEventDate(b);
           if (!dateA) return 1;
           if (!dateB) return -1;
-          return new Date(dateB) - new Date(dateA);
+          return new Date(String(dateB).split('T')[0]) - new Date(String(dateA).split('T')[0]);
         });
 
         setUpcomingEvents(upcoming);
@@ -70,6 +84,25 @@ export default function EventGrid() {
 
   if (loading) return <div>Loading events...</div>;
 
+  // Helper to format date strings safely without timezone sliding
+  const formatEventDate = (rawDate) => {
+    if (!rawDate) return 'Date TBA';
+    const cleanStr = String(rawDate).split('T')[0];
+    const [y, m, d] = cleanStr.split('-');
+    if (!y || !m || !d) return 'Date TBA';
+    
+    // Construct UTC date to render components cleanly
+    const utcDate = new Date(Date.UTC(Number(y), Number(m) - 1, Number(d)));
+    if (isNaN(utcDate.getTime())) return 'Date TBA';
+
+    return utcDate.toLocaleDateString('en-US', {
+      timeZone: 'UTC',
+      month: '2-digit',
+      day: '2-digit',
+      year: 'numeric'
+    });
+  };
+
   return (
     <div className="events-page-container">
       {/* Upcoming Events Section */}
@@ -81,16 +114,7 @@ export default function EventGrid() {
             const photoUrl = getEventPhotoUrl(event);
             const descriptionText = getPlainText(getEventDescription(event));
             const rawDate = getEventDate(event);
-
-            // Fallback to 'Date TBA' if the date is missing
-            const formattedDate = rawDate 
-              ? new Date(rawDate).toLocaleDateString('en-US', {
-                  timeZone: 'UTC',
-                  month: '2-digit',
-                  day: '2-digit',
-                  year: 'numeric'
-                })
-              : 'Date TBA';
+            const formattedDate = formatEventDate(rawDate);
 
             return (
               <div key={event.id || event.documentId} className="event-card">
@@ -113,15 +137,7 @@ export default function EventGrid() {
             const photoUrl = getEventPhotoUrl(event);
             const descriptionText = getPlainText(getEventDescription(event));
             const rawDate = getEventDate(event);
-
-            const formattedDate = rawDate 
-              ? new Date(rawDate).toLocaleDateString('en-US', {
-                  timeZone: 'UTC',
-                  month: '2-digit',
-                  day: '2-digit',
-                  year: 'numeric'
-                })
-              : 'Date TBA';
+            const formattedDate = formatEventDate(rawDate);
 
             return (
               <div key={event.id || event.documentId} className="event-card past-card">

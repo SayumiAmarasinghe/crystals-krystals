@@ -110,3 +110,15 @@
   }
   .testimonial-card { flex-basis: 85%; }
 }
+/* Add these rules to TestimonialGrid.css */
+.testimonials-carousel.is-static .testimonials-grid {
+  overflow: visible;
+}
+
+.testimonials-track.static-track {
+  display: flex;
+  gap: 20px;
+  transform: none !important;
+  transition: none !important;
+  justify-content: center;
+}

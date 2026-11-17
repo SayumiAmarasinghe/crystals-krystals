@@ -2,7 +2,7 @@
 
 .footer-container {
   width: 100%;
-  padding: 2rem;
+  padding: 1.5rem 2rem; /* Reduced from 2rem/4rem */
   background-color: #F1D5DB;
   box-sizing: border-box;
 }
@@ -11,20 +11,20 @@
   max-width: 1000px;
   margin: 0 auto;
   display: flex;
-  flex-direction: column; /* Stack on mobile */
-  gap: 3rem;
+  flex-direction: column; 
+  gap: 1.5rem; /* Reduced from 3rem */
 }
 
 /* --- Left Section --- */
 .footer-left {
   display: flex;
   flex-direction: column;
-  gap: 1rem;
+  gap: 0.5rem; /* Reduced from 1rem */
 }
 
 .footer-logo {
   font-family: 'Daydream', cursive, sans-serif;
-  font-size: 2.5rem;
+  font-size: 2rem; /* Slightly scaled down from 2.5rem */
   font-weight: bold;
   letter-spacing: 0.05em;
   margin: 0;
@@ -34,7 +34,7 @@
   display: flex;
   gap: 1rem;
   align-items: center;
-  margin-top: 0.5rem;
+  margin-top: 0.25rem; /* Reduced from 0.5rem */
 }
 
 .social-link {
@@ -43,7 +43,7 @@
 }
 
 .social-link:hover {
-  color: #4b5563; /* Gray hover effect */
+  color: #4b5563; 
 }
 
 /* --- Right Section --- */
@@ -56,12 +56,12 @@
 .footer-nav {
   display: flex;
   flex-direction: column;
-  gap: 1.25rem;
+  gap: 0.75rem; /* Reduced from 1.25rem */
 }
 
 .footer-nav a {
   font-family: 'Podkova', serif;
-  font-size: 1.125rem;
+  font-size: 1rem; /* Slightly reduced from 1.125rem */
   font-weight: bold;
   color: #111827;
   text-decoration: none;
@@ -69,11 +69,11 @@
 }
 
 .footer-nav a:hover {
-  color: #8b5cf6; /* Purple hover effect */
+  color: #8b5cf6; 
 }
 
 .footer-copyright {
-  margin-top: 2.5rem;
+  margin-top: 1rem; /* Dramatically reduced from 2.5rem */
 }
 
 .footer-copyright p {
@@ -86,17 +86,25 @@
 /* --- Desktop Layout (Screens wider than 768px) --- */
 @media (min-width: 768px) {
   .footer-container {
-    padding: 4rem;
+    padding: 2rem 4rem; /* Reduced from a massive 4rem all-around */
   }
 
   .footer-content {
-    flex-direction: row; /* Sit side-by-side on larger screens */
+    flex-direction: row; 
     justify-content: space-between;
-    align-items: flex-start;
+    align-items: center; /* Vertically centers the logo side and nav side */
   }
 
   .footer-right {
-    width: 50%;
-    margin-left: 3rem;
+    width: auto; /* Let it size naturally rather than taking a full 50% */
+    margin-left: 0;
   }
+  
+  /* If you want the navigation links horizontal on desktop instead of vertical, uncomment below: */
+  /*
+  .footer-nav {
+    flex-direction: row;
+    gap: 2rem;
+  }
+  */
 }
