@@ -7,6 +7,7 @@ import {
   getEventDate,
   getPlainText 
 } from '../utils.js';
+import "./EventGrid.css";
 
 export default function EventGrid() {
   const [upcomingEvents, setUpcomingEvents] = useState([]);
@@ -141,9 +142,9 @@ export default function EventGrid() {
 
             return (
               <div key={event.id || event.documentId} className="event-card past-card">
-                {photoUrl && <img src={photoUrl} alt={name} />}
                 <h3>{name}</h3>
                 <span className="event-date">{formattedDate}</span>
+                {photoUrl && <img src={photoUrl} alt={name} />}
                 <p>{descriptionText}</p>
               </div>
             );
