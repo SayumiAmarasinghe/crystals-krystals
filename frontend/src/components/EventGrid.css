@@ -1,0 +1,61 @@
+.events-page-container {
+  text-align: left;
+}
+
+.events-section {
+  margin-bottom: 72px;
+}
+
+.events-section h2 {
+  font-size: 2rem;
+  margin-bottom: 24px;
+  font-weight: bold;
+}
+
+.events-grid {
+  display: grid;
+  gap: 24px 16px;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.event-card {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.event-card h3 {
+  font-size: 1.25rem;
+  font-weight: bold;
+  margin: 0 0 4px 0;
+}
+
+.event-date {
+  font-size: 0.875rem;
+  color: #666;
+  margin-bottom: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.event-card img {
+  width: 100%;
+  height: 280px;
+  object-fit: cover;
+  border-radius: 12px;
+  background-color: #d1d5db; 
+  margin-bottom: 12px;
+}
+
+.event-card p {
+  font-size: 0.95rem;
+  line-height: 1.5;
+  color: #4b5563;
+}
+
+
+@media (max-width: 800px) {
+  .events-grid {
+    grid-template-columns: 1fr;
+  }
+}
